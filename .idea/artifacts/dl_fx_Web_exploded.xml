@@ -4,14 +4,12 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="dl_fx" />
-          <element id="module-output" name="dl_spring" />
           <element id="module-output" name="dlFx" />
           <element id="module-output" name="dlSpring" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="dlFx/web/Web" />
-      <element id="javaee-facet-resources" facet="dlSpring/web/Web" />
+      <element id="javaee-facet-resources" facet="dlSpring/web/Web2" />
+      <element id="javaee-facet-resources" facet="dlFx/web/Web2" />
     </root>
   </artifact>
 </component>
