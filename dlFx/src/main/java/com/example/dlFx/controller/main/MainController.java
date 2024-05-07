@@ -17,7 +17,7 @@ public class MainController {
     public void nextPage(Button button, String title, String pageLocation) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(pageLocation));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 650, 500);
         Stage stage = (Stage) button.getScene().getWindow();
         stage.setTitle(title);
         stage.setResizable(false);

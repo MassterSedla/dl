@@ -2,7 +2,7 @@ package com.example.dlFx.controller;
 
 import com.example.dlFx.controller.main.MainController;
 import com.example.dlFx.httpRequests.HttpRequests;
-import com.example.dlSpring.model.User;
+import com.example.dlFx.model.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

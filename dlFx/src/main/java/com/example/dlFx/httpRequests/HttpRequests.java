@@ -1,7 +1,7 @@
 package com.example.dlFx.httpRequests;
 
-import com.example.dlSpring.dto.AuthorizedUserDto;
-import com.example.dlSpring.dto.main.MainDto;
+import com.example.dlFx.dto.AuthorizedUserDto;
+import com.example.dlFx.dto.main.MainDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
