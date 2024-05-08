@@ -2,7 +2,7 @@ package com.example.dlFx.controller;
 
 import com.example.dlFx.controller.main.MainController;
 import com.example.dlFx.httpRequests.HttpRequests;
-import com.example.dlSpring.dto.AuthorizedUserDto;
+import com.example.dlFx.dto.AuthorizedUserDto;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

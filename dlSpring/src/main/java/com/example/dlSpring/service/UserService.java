@@ -5,6 +5,7 @@ import com.example.dlSpring.model.User;
 import com.example.dlSpring.repository.RoleRepository;
 import com.example.dlSpring.repository.UserRepository;
 import com.example.dlSpring.model.Role;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,11 +18,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@NoArgsConstructor
 public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
-    private final BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
                        @Lazy BCryptPasswordEncoder passwordEncoder) {

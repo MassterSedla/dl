@@ -1,0 +1,91 @@
+
+.close {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.close:hover {
+    -fx-background-color: #ff5151;
+}
+
+.minimize {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.minimize:hover {
+    -fx-background-color: #90E0EF;
+}
+
+.top-form {
+    -fx-background-color: #03045E;
+}
+
+.left-form {
+    -fx-background-color: linear-gradient(to top right, #03045E, #00B4D8);
+}
+
+.server-room-number {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.server-room-number:hover {
+    -fx-background-color: #90E0EF;
+}
+
+.logout {
+    -fx-background-color: #90E0EF;
+}
+
+.logout:hover {
+    -fx-background-color: #ff5151;
+}
+
+.bg-white {
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0,.3), 8, 0, 0, 0);
+    -fx-background-radius: 8px;
+}
+
+.bg-white:hover {
+    -fx-effect: dropshadow(three-pass-box, #00B4D8, 8, 0, 0, 0);
+}
+
+.bg-white-2 {
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(three-pass-box, #00B4D8, 8, 0, 0, 0);
+    -fx-background-radius: 8px;
+}
+
+
+.cb .menu-item:focused {
+    -fx-background-color: #9BC995 ;
+}
+
+.cb {
+    -fx-mark-color: #00B4D8 ;
+}
+
+/* Цвет текста и размер шрифта для выбранного элемента в элементе управления */
+.cb .label {
+    -fx-text-fill: black;
+    -fx-font-size: 14pt;
+}
+
+/* Цвет текста и размер шрифта текста для выбора во всплывающем списке */
+#choice-box-menu-item * {
+    -fx-text-fill: #03045E;
+    -fx-font-size: 12pt;
+}
+
+/* Цвет фона стрелки */
+.cb .arrow {
+    -fx-background-color: #03045E;
+}
+
+/* Цвет фона всплывающего окна */
+#choice-box-popup-menu {
+    -fx-background-color: #fff;
+}

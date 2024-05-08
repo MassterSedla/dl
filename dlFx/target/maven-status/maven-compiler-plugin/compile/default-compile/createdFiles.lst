@@ -1,0 +1,6 @@
+module-info.class
+com\example\dlFx\controller\MainPageController.class
+com\example\dlFx\httpRequests\HttpRequests.class
+com\example\dlFx\FxApplication.class
+com\example\dlFx\controller\AuthController.class
+com\example\dlFx\controller\main\MainController.class
