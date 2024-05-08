@@ -18,11 +18,11 @@ public class Switch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int number;
+    private int number; // надо удалить
     private String type;
-    private int room;
+    private int room; // 2 поля в одно: сооружение + номер помещения; Надо сделать string
     private int permissibleLoad;
-    private String characteristics;
+    private String characteristics; //не нужно
     @OneToMany
     private List<EquipmentAtSwitch> equipmentAtSwitches;
 

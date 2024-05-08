@@ -18,11 +18,11 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String name; // не нужно
     private String type;
     private String model;
     private int equipmentLoad;
-    private String characteristics;
+    private String characteristics; // не нужно
     @OneToMany
     private List<EquipmentAtSwitch> equipmentAtSwitch;
 
