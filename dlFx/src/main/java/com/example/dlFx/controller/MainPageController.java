@@ -22,6 +22,7 @@ public class MainPageController extends MainController implements Initializable 
     private Label label;
     @FXML
     private Button button;
+    //eknfieuwfuhwehfewf
     @FXML
     private Button button2;
 

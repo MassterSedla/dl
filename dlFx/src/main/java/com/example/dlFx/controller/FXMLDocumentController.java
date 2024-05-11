@@ -2,6 +2,8 @@ package com.example.dlFx.controller;
 
 import com.example.dlFx.FxApplication;
 import com.example.dlFx.controller.main.MainController;
+import com.example.dlFx.dto.AuthorizedUserDto;
+import com.example.dlFx.httpRequests.HttpRequests;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +18,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FXMLDocumentController extends MainController implements Initializable {
+
+    // на экране входа нужно добавить поле для отображения ошибки входа строка 103 поле label
 
     @FXML
     private AnchorPane signIn_form;
@@ -90,11 +95,20 @@ public class FXMLDocumentController extends MainController implements Initializa
 
     // Авторизация, вход и смена сцены
     @FXML
-   private void switchToFXMLDocument2() {
-
-        signIn_logIn_btn.getScene().getWindow().hide();
-        FxApplication fxApplication = new FxApplication();
-        fxApplication.showFXMLDocument2();
+   private void switchToFXMLDocument2() throws IOException, URISyntaxException, InterruptedException {
+        AuthorizedUserDto authorizedUserDto = new AuthorizedUserDto(signIn_username.getText(), signIn_password.getText());
+        String uri = "login";
+        String response = HttpRequests.AuthRequest(authorizedUserDto, uri);
+        if (response.contains(HttpRequests.AUTH_EXCEPTION)) {
+//            label.setText(HttpRequests.AUTH_EXCEPTION);
+            signIn_username.setText("");
+            signIn_password.setText("");
+        } else {
+            HttpRequests.setTOKEN(response);
+            signIn_logIn_btn.getScene().getWindow().hide();
+            FxApplication fxApplication = new FxApplication();
+            fxApplication.showFXMLDocument2();
+        }
     }
 
     @Override

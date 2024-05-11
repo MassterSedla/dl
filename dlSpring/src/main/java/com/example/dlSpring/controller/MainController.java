@@ -26,11 +26,10 @@ public class MainController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/page")
-    public ResponseEntity<User> newUser(@RequestBody AuthorizedUserDto userDto) {
-        User user = service.saveUser(userDto);
-        System.out.println(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/page")
+    public ResponseEntity<?> newUser() {
+
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
 

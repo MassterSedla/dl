@@ -20,26 +20,26 @@ public class Switch {
     private Long id;
     private int number;
     private String type;
-    private int room;
-    private int permissibleLoad;
-    private String characteristics;
+    private String room;
+    private int permissibleTrafficLoad;
+    private int permissiblePowerLoad;
     @OneToMany
     private List<EquipmentAtSwitch> equipmentAtSwitches;
 
-    public Switch(int number, String type, int room, int permissibleLoad, String characteristics, List<EquipmentAtSwitch> equipmentAtSwitches) {
+    public Switch(int number, String type, String room, int permissibleTrafficLoad, int permissiblePowerLoad, List<EquipmentAtSwitch> equipmentAtSwitches) {
         this.number = number;
         this.type = type;
         this.room = room;
-        this.permissibleLoad = permissibleLoad;
-        this.characteristics = characteristics;
+        this.permissibleTrafficLoad = permissibleTrafficLoad;
+        this.permissiblePowerLoad = permissiblePowerLoad;
         this.equipmentAtSwitches = equipmentAtSwitches;
     }
 
-    public Switch(int number, String type, int room, int permissibleLoad, String characteristics) {
+    public Switch(int number, String type, String room, int permissibleTrafficLoad, int permissiblePowerLoad) {
         this.number = number;
         this.type = type;
         this.room = room;
-        this.permissibleLoad = permissibleLoad;
-        this.characteristics = characteristics;
+        this.permissibleTrafficLoad = permissibleTrafficLoad;
+        this.permissiblePowerLoad = permissiblePowerLoad;
     }
 }
