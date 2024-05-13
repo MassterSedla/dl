@@ -33,7 +33,7 @@ public class In implements CommandLineRunner {
             User userUser = new User("user", passwordEncoder.encode("user"), userRoles);
             userRepository.save(userUser);
         }
-        Switch aSwitch = new Switch(1, "first", "1", 200, 200);
+        Switch aSwitch = new Switch(1, "first", "1", "1-1", 200, 200);
         aSwitch = switchRepository.save(aSwitch);
         Equipment equipment = new Equipment("camera", "first model", 10, 10);
         equipment = equipmentRepository.save(equipment);
