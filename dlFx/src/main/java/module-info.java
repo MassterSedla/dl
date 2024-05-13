@@ -3,6 +3,7 @@ module com.example.dlFx {
         requires javafx.fxml;
         requires java.net.http;
         requires com.fasterxml.jackson.databind;
+        requires static lombok;
 
         opens com.example.dlFx to javafx.fxml;
         opens com.example.dlFx.controller to javafx.fxml;

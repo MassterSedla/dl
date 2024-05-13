@@ -18,7 +18,7 @@ public class Switch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int number; // надо удалить
+    private int number;
     private String type;
     private int room; // 2 поля в одно: сооружение + номер помещения; Надо сделать string
     private int permissibleLoad;
