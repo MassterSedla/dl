@@ -18,28 +18,25 @@ public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name; // не нужно
     private String type;
     private String model;
-    private int equipmentLoad;
-    private String characteristics; // не нужно
+    private int equipmentTrafficLoad;
+    private int equipmentPowerLoad;
     @OneToMany
     private List<EquipmentAtSwitch> equipmentAtSwitch;
 
-    public Equipment(String name, String type, String model, int equipmentLoad, String characteristics) {
-        this.name = name;
+    public Equipment(String type, String model, int equipmentTrafficLoad, int equipmentPowerLoad) {
         this.type = type;
         this.model = model;
-        this.equipmentLoad = equipmentLoad;
-        this.characteristics = characteristics;
+        this.equipmentTrafficLoad = equipmentTrafficLoad;
+        this.equipmentPowerLoad = equipmentPowerLoad;
     }
 
-    public Equipment(String name, String type, String model, int equipmentLoad, String characteristics, List<EquipmentAtSwitch> equipmentAtSwitch) {
-        this.name = name;
+    public Equipment(String type, String model, int equipmentTrafficLoad, int equipmentPowerLoad, List<EquipmentAtSwitch> equipmentAtSwitch) {
         this.type = type;
         this.model = model;
-        this.equipmentLoad = equipmentLoad;
-        this.characteristics = characteristics;
+        this.equipmentTrafficLoad = equipmentTrafficLoad;
+        this.equipmentPowerLoad = equipmentPowerLoad;
         this.equipmentAtSwitch = equipmentAtSwitch;
     }
 }

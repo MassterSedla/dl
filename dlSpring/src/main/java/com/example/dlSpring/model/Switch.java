@@ -20,26 +20,30 @@ public class Switch {
     private Long id;
     private int number;
     private String type;
-    private int room; // 2 поля в одно: сооружение + номер помещения; Надо сделать string
-    private int permissibleLoad;
-    private String characteristics; //не нужно
+    private String building;
+    private String room;
+    private int permissibleTrafficLoad;
+    private int permissiblePowerLoad;
     @OneToMany
     private List<EquipmentAtSwitch> equipmentAtSwitches;
 
-    public Switch(int number, String type, int room, int permissibleLoad, String characteristics, List<EquipmentAtSwitch> equipmentAtSwitches) {
+    public Switch(int number, String type, String building, String room, int permissibleTrafficLoad,
+                  int permissiblePowerLoad, List<EquipmentAtSwitch> equipmentAtSwitches) {
         this.number = number;
         this.type = type;
+        this.building = building;
         this.room = room;
-        this.permissibleLoad = permissibleLoad;
-        this.characteristics = characteristics;
+        this.permissibleTrafficLoad = permissibleTrafficLoad;
+        this.permissiblePowerLoad = permissiblePowerLoad;
         this.equipmentAtSwitches = equipmentAtSwitches;
     }
 
-    public Switch(int number, String type, int room, int permissibleLoad, String characteristics) {
+    public Switch(int number, String type, String building, String room, int permissibleTrafficLoad, int permissiblePowerLoad) {
         this.number = number;
         this.type = type;
+        this.building = building;
         this.room = room;
-        this.permissibleLoad = permissibleLoad;
-        this.characteristics = characteristics;
+        this.permissibleTrafficLoad = permissibleTrafficLoad;
+        this.permissiblePowerLoad = permissiblePowerLoad;
     }
 }

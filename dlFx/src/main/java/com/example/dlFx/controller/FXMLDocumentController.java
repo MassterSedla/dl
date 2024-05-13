@@ -2,6 +2,9 @@ package com.example.dlFx.controller;
 
 import com.example.dlFx.FxApplication;
 import com.example.dlFx.controller.main.MainController;
+import com.example.dlFx.dto.AuthorizedUserDto;
+import com.example.dlFx.httpRequests.HttpRequests;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
