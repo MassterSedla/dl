@@ -55,9 +55,14 @@ public class FXMLDocumentController2 extends MainController implements Initializ
         fxApplication.showFXMLDocument();
     }
 
+    private void handleSelectionRoomNumber(String val) {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         choiceBox_roomNumber.getItems().addAll(rooms);
+        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(newVal));
     }
 }

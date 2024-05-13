@@ -28,7 +28,7 @@ public class AuthController extends MainController implements Initializable {
 
     @FXML
     public void next() throws IOException {
-        nextPage(button, "Main page", getFxmlPackage() + "MainPageController.fxml");
+//        nextPage(button, "Main page", getFxmlPackage() + "MainPageController.fxml");
     }
 
     @FXML
@@ -42,7 +42,7 @@ public class AuthController extends MainController implements Initializable {
             password.setText("");
         } else {
             HttpRequests.setTOKEN(response);
-            nextPage(button, "Main page", getFxmlPackage() + "MainPageController.fxml");
+//            nextPage(button, "Main page", getFxmlPackage() + "MainPageController.fxml");
         }
     }
 

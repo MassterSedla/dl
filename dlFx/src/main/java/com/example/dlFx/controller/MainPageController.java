@@ -28,7 +28,7 @@ public class MainPageController extends MainController implements Initializable 
 
     @FXML
     public void next() throws IOException {
-        nextPage(button, "AuthController page", getFxmlPackage() + "AuthController.fxml");
+//        nextPage(button, "AuthController page", getFxmlPackage() + "AuthController.fxml");
     }
 
     @FXML

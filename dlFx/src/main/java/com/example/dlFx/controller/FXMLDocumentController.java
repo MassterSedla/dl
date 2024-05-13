@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -60,6 +61,9 @@ public class FXMLDocumentController extends MainController implements Initializa
     private TextField signUp_username;
 
 
+    private double x = 0;
+    private double y = 0;
+
     // Закрыть окно авторизации
     public void signIn_close() {
         System.exit(0);
@@ -98,16 +102,15 @@ public class FXMLDocumentController extends MainController implements Initializa
    private void switchToFXMLDocument2() throws IOException, URISyntaxException, InterruptedException {
         AuthorizedUserDto authorizedUserDto = new AuthorizedUserDto(signIn_username.getText(), signIn_password.getText());
         String uri = "login";
-        String response = HttpRequests.AuthRequest(authorizedUserDto, uri);
+        String response = HttpRequests.AuthRequest(new AuthorizedUserDto("user", "user"), uri);
         if (response.contains(HttpRequests.AUTH_EXCEPTION)) {
 //            label.setText(HttpRequests.AUTH_EXCEPTION);
             signIn_username.setText("");
             signIn_password.setText("");
         } else {
             HttpRequests.setTOKEN(response);
-            signIn_logIn_btn.getScene().getWindow().hide();
-            FxApplication fxApplication = new FxApplication();
-            fxApplication.showFXMLDocument2();
+            Stage stage = (Stage) signIn_logIn_btn.getScene().getWindow();
+            showFXMLDocument2(stage);
         }
     }
 
@@ -115,5 +118,38 @@ public class FXMLDocumentController extends MainController implements Initializa
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //label.setText("This is a second controller")
+    }
+
+    public void showFXMLDocument2(Stage stage) {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/example/dlFx/FXMLDocument2.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+//            stage = new Stage();
+
+            // Этот и следующий методы позволяют перемещать окно приложения на экране
+            root.setOnMousePressed((MouseEvent event) -> {
+
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+
+            root.setOnMouseDragged((MouseEvent event) -> {
+
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
+// --------------------------------------------------------------------------------------
+
+            stage.setResizable(false);
+//            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
