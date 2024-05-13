@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="dashboard_form" prefHeight="700.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController2">
    <children>
       <BorderPane layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -525,7 +524,7 @@
             </AnchorPane>
          </center>
       </BorderPane>
-      <BorderPane prefHeight="700.0" prefWidth="1050.0">
+      <BorderPane fx:id="dashboard_form_greeting" prefHeight="700.0" prefWidth="1050.0">
          <top>
             <AnchorPane prefHeight="50.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                <children>
@@ -580,7 +579,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="choiceBox_roomNumber" layoutX="13.0" layoutY="250.0" prefWidth="170.0" style="-fx-border-color: #a2ff96; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
+                  <ChoiceBox fx:id="choiceBox_roomNumber" layoutX="13.0" layoutY="250.0" prefWidth="170.0" style="-fx-border-color: #a2ff96; -fx-border-radius: 3; -fx-border-width: 2;" styleClass="cb" stylesheets="@designMain.css" />
                   <Label layoutX="15.0" layoutY="220.0" text="Choose a room" textFill="#a2ff96">
                      <font>
                         <Font size="16.0" />
@@ -589,7 +588,7 @@
                   <Separator layoutY="190.0" prefWidth="200.0" />
                   <Separator layoutY="155.0" prefWidth="200.0" />
                   <Separator layoutY="340.0" prefWidth="200.0" />
-                  <ChoiceBox fx:id="choiceBox_switch" layoutX="13.0" layoutY="380.0" prefWidth="170.0" />
+                  <ChoiceBox fx:id="choiceBox_switch" layoutX="13.0" layoutY="380.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-width: 2; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
                   <Label layoutX="15.0" layoutY="350.0" text="Select the switch" textFill="#fca311">
                      <font>
                         <Font size="16.0" />
@@ -601,7 +600,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane prefHeight="660.0" prefWidth="850.0" visible="false">
+                  <AnchorPane fx:id="dashboard_form_info" prefHeight="660.0" prefWidth="850.0" visible="false">
                      <children>
                         <AnchorPane prefHeight="260.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="375.0">
                            <children>
@@ -1022,7 +1021,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="660.0" prefWidth="850.0" style="-fx-background-color: #ffffff;">
+                  <AnchorPane fx:id="dashboard_form_greeting" prefHeight="660.0" prefWidth="850.0" style="-fx-background-color: #ffffff;">
                      <children>
                         <AnchorPane layoutX="135.0" layoutY="58.0" prefHeight="75.0" prefWidth="580.0" styleClass="bg-white-2" stylesheets="@designMain.css" AnchorPane.topAnchor="58.0">
                            <children>
@@ -1035,7 +1034,7 @@
                         </AnchorPane>
                         <AnchorPane layoutX="75.0" layoutY="425.0" prefHeight="220.0" prefWidth="700.0">
                            <children>
-                              <ImageView fitHeight="239.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="240.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Фото%203.jpeg" />
                                  </image>

@@ -55,10 +55,12 @@
 
 .bg-white-2 {
     -fx-background-color: #fff;
-    -fx-effect: dropshadow(three-pass-box, #00B4D8, 8, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, #9BC995, 8, 0, 0, 0);
     -fx-background-radius: 8px;
 }
 
+
+/* check box */
 
 .cb .menu-item:focused {
     -fx-background-color: #9BC995 ;

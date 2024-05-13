@@ -6,10 +6,7 @@ import com.example.dlFx.dto.AuthorizedUserDto;
 import com.example.dlFx.httpRequests.HttpRequests;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -42,24 +39,6 @@ public class FXMLDocumentController extends MainController implements Initializa
     private TextField signIn_username;
 
 
-    @FXML
-    private AnchorPane signUp_form;
-    @FXML
-    private Button signUp_close;
-    @FXML
-    private Button signUp_minimize;
-    @FXML
-    private Button signUp_signUp_btn;
-    @FXML
-    private Hyperlink signUp_alreadyHaveAccount;
-    @FXML
-    private TextField signUp_email;
-    @FXML
-    private PasswordField signUp_password;
-    @FXML
-    private TextField signUp_username;
-
-
     // Закрыть окно авторизации
     public void signIn_close() {
         System.exit(0);
@@ -71,27 +50,16 @@ public class FXMLDocumentController extends MainController implements Initializa
         stage.setIconified(true);
     }
 
-    // Закрыть окно регистрации
-    public void signUp_close() {
-        System.exit(0);
-    }
-
-    // Свернуть окно регистрации
-    public void signUp_minimize() {
-        Stage stage = (Stage)signUp_form.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
     // Смена между окнами авторизации и регистрации
-    public void switchForm(ActionEvent event) {
-        if (event.getSource() == signIn_createAccount) {
-            signIn_form.setVisible(false);
-            signUp_form.setVisible(true);
-        } else if (event.getSource() == signUp_alreadyHaveAccount) {
-            signUp_form.setVisible(false);
-            signIn_form.setVisible(true);
-        }
-    }
+//    public void switchForm(ActionEvent event) {
+//        if (event.getSource() == signIn_createAccount) {
+//            signIn_form.setVisible(false);
+//            signUp_form.setVisible(true);
+//        } else if (event.getSource() == signUp_alreadyHaveAccount) {
+//            signUp_form.setVisible(false);
+//            signIn_form.setVisible(true);
+//        }
+//    }
 
     // Авторизация, вход и смена сцены
     @FXML
