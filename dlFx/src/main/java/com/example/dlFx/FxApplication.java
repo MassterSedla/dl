@@ -14,20 +14,22 @@ import java.io.IOException;
 public class FxApplication extends Application {
 
     private Stage primaryStage;
+    private FXMLLoader fxmlLoader;
 
     private double x = 0;
     private double y = 0;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         this.primaryStage = primaryStage;
         showFXMLDocument();
     }
 
     public void showFXMLDocument() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("FXMLDocument.fxml"));
+            Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
 
             // Этот и следующий методы позволяют перемещать окно приложения на экране
@@ -54,11 +56,13 @@ public class FxApplication extends Application {
         }
     }
 
-    public void showFXMLDocument2() {
+    public void showFXMLDocument2(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument2.fxml"));
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("FXMLDocument2.fxml"));
+            Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            Stage stage = new Stage();
+//            stage = new Stage();
 
             // Этот и следующий методы позволяют перемещать окно приложения на экране
             root.setOnMousePressed((MouseEvent event) -> {
@@ -75,7 +79,7 @@ public class FxApplication extends Application {
 // --------------------------------------------------------------------------------------
 
             stage.setResizable(false);
-            stage.initStyle(StageStyle.TRANSPARENT);
+//            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
 

@@ -18,12 +18,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@NoArgsConstructor
 public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
                        @Lazy BCryptPasswordEncoder passwordEncoder) {

@@ -21,6 +21,7 @@ module com.example.dlSpring {
     requires org.apache.tomcat.embed.core;
     requires jjwt;
     requires org.slf4j;
+    requires spring.boot.starter.data.jpa;
 
     opens com.example.dlSpring to spring.core, com.example.dlFx;
     opens com.example.dlSpring.config to spring.core, spring.beans, spring.context;
