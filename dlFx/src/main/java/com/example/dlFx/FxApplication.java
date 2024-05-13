@@ -56,37 +56,37 @@ public class FxApplication extends Application {
         }
     }
 
-//    public void showFXMLDocument2(Stage stage) {
-//        try {
-//            fxmlLoader = new FXMLLoader();
-//            fxmlLoader.setLocation(getClass().getResource("FXMLDocument2.fxml"));
-//            Parent root = fxmlLoader.load();
-//            Scene scene = new Scene(root);
-////            stage = new Stage();
-//
-//            // Этот и следующий методы позволяют перемещать окно приложения на экране
-//            root.setOnMousePressed((MouseEvent event) -> {
-//
-//                x = event.getSceneX();
-//                y = event.getSceneY();
-//            });
-//
-//            root.setOnMouseDragged((MouseEvent event) -> {
-//
-//                stage.setX(event.getScreenX() - x);
-//                stage.setY(event.getScreenY() - y);
-//            });
-//// --------------------------------------------------------------------------------------
-//
-//            stage.setResizable(false);
-////            stage.initStyle(StageStyle.TRANSPARENT);
-//            stage.setScene(scene);
-//            stage.show();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void showFXMLDocument2(Stage stage) {
+        try {
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("FXMLDocument2.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+//            stage = new Stage();
+
+            // Этот и следующий методы позволяют перемещать окно приложения на экране
+            root.setOnMousePressed((MouseEvent event) -> {
+
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+
+            root.setOnMouseDragged((MouseEvent event) -> {
+
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
+// --------------------------------------------------------------------------------------
+
+            stage.setResizable(false);
+//            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
 

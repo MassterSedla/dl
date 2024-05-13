@@ -28,7 +28,6 @@ public class MainController {
 
     @GetMapping("/page")
     public ResponseEntity<?> newUser() {
-
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 

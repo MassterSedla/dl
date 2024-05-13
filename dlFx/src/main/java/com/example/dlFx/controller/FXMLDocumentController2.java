@@ -1,8 +1,6 @@
 package com.example.dlFx.controller;
 
 import com.example.dlFx.FxApplication;
-import com.example.dlFx.controller.main.MainController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,7 +11,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FXMLDocumentController2 extends MainController implements Initializable {
+public class FXMLDocumentController2 implements Initializable {
 
     @FXML
     private AnchorPane dashboard_form;

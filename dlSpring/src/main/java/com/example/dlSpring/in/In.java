@@ -34,10 +34,10 @@ public class In implements CommandLineRunner {
             User userUser = new User("user", passwordEncoder.encode("user"), userRoles);
             userRepository.save(userUser);
         }
-        Switch aSwitch = new Switch(1, "first", "1", "1-1", 200, 200);
-        Switch aSwitch1 = new Switch(2, "first", "2", "1-2", 200, 200);
-        Switch aSwitch2 = new Switch(3, "first", "2", "1-1", 200, 200);
-        Switch aSwitch3 = new Switch(4, "first", "3", "1-1", 200, 200);
+        Switch aSwitch = new Switch(1, "first", "1", 1, "1", 200, 200);
+        Switch aSwitch1 = new Switch(2, "first", "2", 1, "2", 200, 200);
+        Switch aSwitch2 = new Switch(3, "first", "2", 1, "1", 200, 200);
+        Switch aSwitch3 = new Switch(4, "first", "3", 1, "1", 200, 200);
         aSwitch = switchRepository.save(aSwitch);
         switchRepository.save(aSwitch1);
         switchRepository.save(aSwitch2);

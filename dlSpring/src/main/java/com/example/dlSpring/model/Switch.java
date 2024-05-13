@@ -21,6 +21,7 @@ public class Switch {
     private int number;
     private String type;
     private String building;
+    private int floor;
     private String room;
     private int permissibleTrafficLoad;
     private int permissiblePowerLoad;
@@ -28,20 +29,23 @@ public class Switch {
     private List<EquipmentAtSwitch> equipmentAtSwitches;
 
     public Switch(int number, String type, String building, String room, int permissibleTrafficLoad,
-                  int permissiblePowerLoad, List<EquipmentAtSwitch> equipmentAtSwitches) {
+                  int floor, int permissiblePowerLoad, List<EquipmentAtSwitch> equipmentAtSwitches) {
         this.number = number;
         this.type = type;
         this.building = building;
+        this.floor = floor;
         this.room = room;
         this.permissibleTrafficLoad = permissibleTrafficLoad;
         this.permissiblePowerLoad = permissiblePowerLoad;
         this.equipmentAtSwitches = equipmentAtSwitches;
     }
 
-    public Switch(int number, String type, String building, String room, int permissibleTrafficLoad, int permissiblePowerLoad) {
+    public Switch(int number, String type, String building, int floor, String room,
+                  int permissibleTrafficLoad, int permissiblePowerLoad) {
         this.number = number;
         this.type = type;
         this.building = building;
+        this.floor = floor;
         this.room = room;
         this.permissibleTrafficLoad = permissibleTrafficLoad;
         this.permissiblePowerLoad = permissiblePowerLoad;

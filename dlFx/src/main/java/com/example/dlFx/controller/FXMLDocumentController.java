@@ -1,7 +1,6 @@
 package com.example.dlFx.controller;
 
 import com.example.dlFx.FxApplication;
-import com.example.dlFx.controller.main.MainController;
 import com.example.dlFx.dto.AuthorizedUserDto;
 import com.example.dlFx.httpRequests.HttpRequests;
 import javafx.event.ActionEvent;
@@ -23,7 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FXMLDocumentController extends MainController implements Initializable {
+public class FXMLDocumentController implements Initializable {
 
     // на экране входа нужно добавить поле для отображения ошибки входа строка 103 поле label
 
@@ -99,10 +98,10 @@ public class FXMLDocumentController extends MainController implements Initializa
 
     // Авторизация, вход и смена сцены
     @FXML
-   private void switchToFXMLDocument2() throws IOException, URISyntaxException, InterruptedException {
+    private void switchToFXMLDocument2() throws IOException, URISyntaxException, InterruptedException {
         AuthorizedUserDto authorizedUserDto = new AuthorizedUserDto(signIn_username.getText(), signIn_password.getText());
         String uri = "login";
-        String response = HttpRequests.AuthRequest(new AuthorizedUserDto("user", "user"), uri);
+        String response = HttpRequests.AuthRequest(authorizedUserDto, uri);
         if (response.contains(HttpRequests.AUTH_EXCEPTION)) {
 //            label.setText(HttpRequests.AUTH_EXCEPTION);
             signIn_username.setText("");
@@ -110,46 +109,12 @@ public class FXMLDocumentController extends MainController implements Initializa
         } else {
             HttpRequests.setTOKEN(response);
             Stage stage = (Stage) signIn_logIn_btn.getScene().getWindow();
-            showFXMLDocument2(stage);
+            new FxApplication().showFXMLDocument2(stage);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         //label.setText("This is a second controller")
-    }
-
-    public void showFXMLDocument2(Stage stage) {
-        try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/com/example/dlFx/FXMLDocument2.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-//            stage = new Stage();
-
-            // Этот и следующий методы позволяют перемещать окно приложения на экране
-            root.setOnMousePressed((MouseEvent event) -> {
-
-                x = event.getSceneX();
-                y = event.getSceneY();
-            });
-
-            root.setOnMouseDragged((MouseEvent event) -> {
-
-                stage.setX(event.getScreenX() - x);
-                stage.setY(event.getScreenY() - y);
-            });
-// --------------------------------------------------------------------------------------
-
-            stage.setResizable(false);
-//            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
