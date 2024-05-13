@@ -60,9 +60,6 @@ public class FXMLDocumentController implements Initializable {
     private TextField signUp_username;
 
 
-    private double x = 0;
-    private double y = 0;
-
     // Закрыть окно авторизации
     public void signIn_close() {
         System.exit(0);
