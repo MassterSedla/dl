@@ -2,6 +2,7 @@ package com.example.dlSpring.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class Equipment {
     private String model;
     private int equipmentTrafficLoad;
     private int equipmentPowerLoad;
-    @OneToMany
+    @OneToMany(mappedBy = "equipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<EquipmentAtSwitch> equipmentAtSwitch;
 
     public Equipment(String type, String model, int equipmentTrafficLoad, int equipmentPowerLoad) {

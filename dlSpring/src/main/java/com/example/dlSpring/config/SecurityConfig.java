@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-//@EnableWebSecurity
 @EnableAspectJAutoProxy
 public class SecurityConfig {
     private UserService userService;
