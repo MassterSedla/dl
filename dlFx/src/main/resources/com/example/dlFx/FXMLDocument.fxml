@@ -10,41 +10,38 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController">
+
+<AnchorPane fx:id="signIn_form" prefHeight="500.0" prefWidth="650.0" styleClass="bg-form" stylesheets="@designLogin.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="signIn_form" layoutX="125.0" layoutY="89.0" prefHeight="500.0" prefWidth="650.0" styleClass="bg-form" stylesheets="@designLogin.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Button fx:id="signIn_close" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#signIn_close" prefHeight="25.0" prefWidth="55.0" styleClass="close" stylesheets="@designLogin.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="15.0" />
-               </graphic>
-            </Button>
-            <Button fx:id="signIn_minimize" layoutX="538.0" layoutY="2.0" mnemonicParsing="false" onAction="#signIn_minimize" prefHeight="25.0" prefWidth="55.0" styleClass="minimize" stylesheets="@designLogin.css">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15.0" />
-               </graphic>
-            </Button>
-            <FontAwesomeIconView fill="#90e0ef" glyphName="USER" layoutX="296.0" layoutY="150.0" size="80" />
-            <Label layoutX="270.0" layoutY="161.0" text="Sign In" textFill="WHITE">
-               <font>
-                  <Font name="Hiragino Sans W6" size="30.0" />
-               </font>
-            </Label>
-            <TextField fx:id="signIn_username" layoutX="200.0" layoutY="235.0" prefHeight="30.0" prefWidth="250.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
-            <PasswordField fx:id="signIn_password" layoutX="200.0" layoutY="276.0" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css" />
-            <Button fx:id="signIn_logIn_btn" layoutX="249.0" layoutY="360.0" mnemonicParsing="false" onAction="#switchToFXMLDocument2" prefHeight="35.0" prefWidth="150.0" styleClass="login-btn" stylesheets="@designLogin.css" text="Log In">
-               <font>
-                  <Font name="Ayuthaya" size="20.0" />
-               </font>
-               <effect>
-                  <DropShadow height="50.0" offsetY="7.0" radius="12.0" width="0.0">
-                     <color>
-                        <Color opacity="0.4000000059604645" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
-         </children>
-      </AnchorPane>
+      <Button fx:id="signIn_close" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#signIn_close" prefHeight="25.0" prefWidth="55.0" styleClass="close" stylesheets="@designLogin.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="15.0" />
+         </graphic>
+      </Button>
+      <Button fx:id="signIn_minimize" layoutX="538.0" layoutY="2.0" mnemonicParsing="false" onAction="#signIn_minimize" prefHeight="25.0" prefWidth="55.0" styleClass="minimize" stylesheets="@designLogin.css">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15.0" />
+         </graphic>
+      </Button>
+      <FontAwesomeIconView fill="#90e0ef" glyphName="USER" layoutX="296.0" layoutY="150.0" size="80" />
+      <Label layoutX="270.0" layoutY="161.0" text="Sign In" textFill="WHITE">
+         <font>
+            <Font name="Hiragino Sans W6" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="signIn_username" layoutX="200.0" layoutY="235.0" prefHeight="30.0" prefWidth="250.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
+      <PasswordField fx:id="signIn_password" layoutX="200.0" layoutY="276.0" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css" />
+      <Button fx:id="signIn_logIn_btn" layoutX="249.0" layoutY="360.0" mnemonicParsing="false" onAction="#switchToFXMLDocument2" prefHeight="35.0" prefWidth="150.0" styleClass="login-btn" stylesheets="@designLogin.css" text="Log In">
+         <font>
+            <Font name="Ayuthaya" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow height="50.0" offsetY="7.0" radius="12.0" width="0.0">
+               <color>
+                  <Color opacity="0.4000000059604645" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
