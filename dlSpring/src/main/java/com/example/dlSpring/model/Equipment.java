@@ -39,4 +39,15 @@ public class Equipment {
         this.equipmentPowerLoad = equipmentPowerLoad;
         this.equipmentAtSwitch = equipmentAtSwitch;
     }
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", model='" + model + '\'' +
+                ", equipmentTrafficLoad=" + equipmentTrafficLoad +
+                ", equipmentPowerLoad=" + equipmentPowerLoad +
+                '}';
+    }
 }

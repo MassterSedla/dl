@@ -31,6 +31,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public User saveUser(AuthorizedUserDto userDto) {
         User user = new User();
         user.setName(userDto.getName());
@@ -42,10 +43,12 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public User getUser(Long id) {
         return userRepository.findById(id).get();
     }
 
+    @Transactional
     public User getUserByName(String name) {
         return userRepository.findByName(name);
     }

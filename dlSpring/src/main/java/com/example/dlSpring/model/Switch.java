@@ -2,6 +2,7 @@ package com.example.dlSpring.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,8 @@ public class Switch {
     private String room;
     private int permissibleTrafficLoad;
     private int permissiblePowerLoad;
-    @OneToMany
+    @OneToMany(mappedBy = "aSwitch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<EquipmentAtSwitch> equipmentAtSwitches;
 
     public Switch(int number, String type, String building, String room, int permissibleTrafficLoad,
@@ -49,5 +51,19 @@ public class Switch {
         this.room = room;
         this.permissibleTrafficLoad = permissibleTrafficLoad;
         this.permissiblePowerLoad = permissiblePowerLoad;
+    }
+
+    @Override
+    public String toString() {
+        return "Switch{" +
+                "id=" + id +
+                ", number=" + number +
+                ", type='" + type + '\'' +
+                ", building='" + building + '\'' +
+                ", floor=" + floor +
+                ", room='" + room + '\'' +
+                ", permissibleTrafficLoad=" + permissibleTrafficLoad +
+                ", permissiblePowerLoad=" + permissiblePowerLoad +
+                '}';
     }
 }

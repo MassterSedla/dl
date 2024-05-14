@@ -17,6 +17,7 @@ public class MainService {
     private final SwitchRepository switchRepository;
 
     public List<Switch> switchesToMainPage() {
+
         return null;
     }
 
