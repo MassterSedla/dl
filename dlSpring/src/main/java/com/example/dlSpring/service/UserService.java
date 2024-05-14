@@ -18,10 +18,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+//@NoArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
@@ -52,8 +52,6 @@ public class UserService implements UserDetailsService {
     public User getUserByName(String name) {
         return userRepository.findByName(name);
     }
-
-
 
 
     @Override

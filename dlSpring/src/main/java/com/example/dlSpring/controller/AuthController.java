@@ -15,6 +15,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody AuthorizedUserDto authorizedUserDto) {
+        System.out.println("penis");
         return authService.createAuthToken(authorizedUserDto);
     }
 

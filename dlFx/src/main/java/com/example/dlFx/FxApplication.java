@@ -62,7 +62,6 @@ public class FxApplication extends Application {
             fxmlLoader.setLocation(getClass().getResource("FXMLDocument2.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-//            stage = new Stage();
 
             // Этот и следующий методы позволяют перемещать окно приложения на экране
             root.setOnMousePressed((MouseEvent event) -> {
@@ -79,7 +78,6 @@ public class FxApplication extends Application {
 // --------------------------------------------------------------------------------------
 
             stage.setResizable(false);
-//            stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
 

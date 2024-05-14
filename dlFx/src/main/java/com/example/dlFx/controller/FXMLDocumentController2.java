@@ -44,13 +44,13 @@ public class FXMLDocumentController2 implements Initializable {
         stage.setIconified(true);
     }
 
-    // Назад на страницу авторизации
+//     Назад на страницу авторизации
     @FXML
     private void switchToFXMLDocument() {
 
         dashboard_logOut_btn.getScene().getWindow().hide();
-        FxApplication fxApplication = new FxApplication();
-        fxApplication.showFXMLDocument();
+        //FxApplication fxApplication = new FxApplication();
+        //fxApplication.showFXMLDocument();
     }
 
     private void handleSelectionRoomNumber(String val) {

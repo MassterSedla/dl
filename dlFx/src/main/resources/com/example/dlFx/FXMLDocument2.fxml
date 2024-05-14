@@ -566,7 +566,7 @@
                      </font>
                   </Label>
                   <Label layoutX="17.0" layoutY="165.0" text="Where are we working today?" textFill="WHITE" />
-                  <Button fx:id="dashboard_logOut_btn" layoutX="14.0" layoutY="615.0" mnemonicParsing="false" onAction="#switchToFXMLDocument" styleClass="logout" stylesheets="@designMain.css" textFill="WHITE">
+                  <Button fx:id="dashboard_logOut_btn" layoutX="14.0" layoutY="615.0" mnemonicParsing="false" styleClass="logout" stylesheets="@designMain.css" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="20" />
                      </graphic>
