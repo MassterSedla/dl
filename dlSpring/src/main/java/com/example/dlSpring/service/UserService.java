@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
+    //@Transactional
     public User saveUser(AuthorizedUserDto userDto) {
         User user = new User();
         user.setName(userDto.getName());
@@ -43,19 +43,19 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    @Transactional
+    //@Transactional
     public User getUser(Long id) {
         return userRepository.findById(id).get();
     }
 
-    @Transactional
+    //@Transactional
     public User getUserByName(String name) {
         return userRepository.findByName(name);
     }
 
 
     @Override
-    @Transactional
+    //@Transactional
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user;
         if ((user = userRepository.findByName(name)) == null) {
