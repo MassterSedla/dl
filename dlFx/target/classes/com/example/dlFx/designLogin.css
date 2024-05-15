@@ -1,0 +1,57 @@
+
+.bg-form {
+    -fx-background-color: linear-gradient(to top right, #03045E, #00B4D8);
+}
+
+.close {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.close:hover {
+    -fx-background-color: #ff5151;
+}
+
+.minimize {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.minimize:hover {
+    -fx-background-color: #90E0EF;
+}
+
+.textfield {
+    -fx-background-color: transparent;
+    -fx-text-inner-color: #ffffff;
+    -fx-border-color: #00B4D8;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-text-size: 14px;
+}
+
+.textfield:focused {
+    -fx-border-color: #90E0EF;
+    -fx-border-width: 0px 0px 2px 0px ;
+}
+
+.login-btn {
+    -fx-background-color: linear-gradient(to bottom right, #FCA311, #00B4D8);
+    -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
+    -fx-background-radius: 1px;
+}
+
+.login-btn:hover {
+    -fx-background-color: #FFB703;
+}
+
+.signup-btn {
+    -fx-background-color: linear-gradient(to bottom right, #00B4D8, #03045E);
+    -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
+    -fx-background-radius: 1px;
+}
+
+.signup-btn:hover {
+    -fx-background-color: #FFB703;
+}
