@@ -2,12 +2,18 @@ package com.example.dlFx.controller;
 
 import com.example.dlFx.FxApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,12 +32,17 @@ public class FXMLDocumentController2 implements Initializable {
     private Button dashboard_logOut_btn;
 
     @FXML
+    private Button vacate_occupy_btn;
+
+    @FXML
     private ChoiceBox<String> choiceBox_roomNumber;
 
     @FXML
     private ChoiceBox<String> choiceBox_switch;
 
     private String[] rooms = {"E.1.015.1", "F.1.001.1", "B.2.044"};
+
+    private FXMLLoader fxmlLoader;
 
     // Закрыть окно
     public void dashboard_close() {
@@ -56,6 +67,31 @@ public class FXMLDocumentController2 implements Initializable {
     private void handleSelectionRoomNumber(String val) {
 
     }
+
+    @FXML
+    public void vacate_occupy_btnClicked() throws IOException {
+
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/example/dlFx/DialogPane.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+
+        // Создание DialogPane
+        DialogPane dialogPane = new DialogPane();
+
+        // Создание нового окна
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Установка DialogPane в качестве содержимого окна
+        dialogStage.setScene(scene);
+        dialogStage.show();
+
+
+        //stage.setResizable(false);
+        //stage.centerOnScreen();
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

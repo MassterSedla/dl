@@ -79,6 +79,7 @@ public class FxApplication extends Application {
 
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (Exception e) {
