@@ -58,16 +58,20 @@ public class In implements CommandLineRunner {
         equipmentAtSwitch = new EquipmentAtSwitch(equipment, aSwitch2, 2);
         equipmentAtSwitchRepository.save(equipmentAtSwitch);
 
-        List<Switch> list = switchRepository.findAll();
-        list.forEach(s -> {
-            int sum = s.getEquipmentAtSwitches().stream().mapToInt(equipmentAtSwitch1 ->
-                    equipmentAtSwitch1.getEquipment().getEquipmentPowerLoad()).sum();
-            s.setPermissiblePowerLoad(s.getPermissiblePowerLoad() - sum);
-        });
-        EquipmentAtSwitch q = (EquipmentAtSwitch) aSwitch.getEquipmentAtSwitches();
+        Switch fetchedSwitch = switchRepository.findById(aSwitch.getId()).orElseThrow(() -> new RuntimeException("Switch not found"));
+//        System.out.println(fetchedSwitch.getEquipmentAtSwitches());  // Проверка equipmentAtSwitches
+        fetchedSwitch.getEquipmentAtSwitches().forEach(e -> System.out.println(e.getEquipment()));
 
-        System.out.println(switchRepository.findAllRoomsByBuilding("2"));
-        System.out.println(equipmentAtSwitch.getASwitch() + "\n" + equipmentAtSwitch.getEquipment());
-        System.out.println(list);
+        List<Switch> list = switchRepository.findAll();
+//        list.forEach(s -> {
+//            int sum = s.getEquipmentAtSwitches().stream().mapToInt(equipmentAtSwitch1 ->
+//                    equipmentAtSwitch1.getEquipment().getEquipmentPowerLoad()).sum();
+//            s.setPermissiblePowerLoad(s.getPermissiblePowerLoad() - sum);
+//        });
+//        System.out.println(aSwitch.getEquipmentAtSwitches());
+//
+//        System.out.println(switchRepository.findAllRoomsByBuilding("2"));
+//        System.out.println(aSwitch);
+        System.out.println(list.get(0));
     }
 }

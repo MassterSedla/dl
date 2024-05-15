@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-//@NoArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -66,10 +65,5 @@ public class UserService implements UserDetailsService {
                 user.getPassword(),
                 user.getAuthorities()
         );
-    }
-
-
-    public String getWeatherForecast() {
-        return "It's gonna snow a lot. Brace yourselves, the winter is coming.";
     }
 }

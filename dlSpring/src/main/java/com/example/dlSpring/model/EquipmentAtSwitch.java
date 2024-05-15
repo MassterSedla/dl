@@ -1,6 +1,7 @@
 package com.example.dlSpring.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,8 +18,12 @@ public class EquipmentAtSwitch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "equipment_id")
+    @JsonBackReference
     private Equipment equipment;
     @ManyToOne
+    @JoinColumn(name = "switch_id")
+    @JsonBackReference
     private Switch aSwitch;
     private int port;
 
