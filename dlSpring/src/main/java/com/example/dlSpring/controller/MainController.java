@@ -1,35 +1,33 @@
 package com.example.dlSpring.controller;
 
-import com.example.dlSpring.dto.AuthorizedUserDto;
+import com.example.dlSpring.dto.MainPageDto;
 import com.example.dlSpring.model.User;
-import com.example.dlSpring.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.dlSpring.service.MainService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class MainController {
-    private final UserService service;
+    private final MainService mainService;
 
-
-    @Autowired
-    public MainController(UserService service) {
-        this.service = service;
-    }
-
-
-    @GetMapping("/page/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        User user = service.getUser(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/page/{building}/{floor}")
+    public ResponseEntity<MainPageDto> getRooms(@PathVariable String building, @PathVariable int floor) {
+        MainPageDto mainPageDto = new MainPageDto();
+        mainPageDto.setList(mainService.listOfRooms(building, floor));
+        return new ResponseEntity<>(mainPageDto, HttpStatus.OK);
     }
 
     @GetMapping("/page")
-    public ResponseEntity<?> newUser() {
-        return new ResponseEntity<>("", HttpStatus.OK);
+    public ResponseEntity<MainPageDto> getAllBuildings() {
+        MainPageDto mainPageDto = new MainPageDto();
+        mainPageDto.setList(mainService.listOfBuildings());
+        return new ResponseEntity<>(mainPageDto, HttpStatus.OK);
     }
-
-
 }

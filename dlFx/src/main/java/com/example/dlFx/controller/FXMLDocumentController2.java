@@ -1,6 +1,9 @@
 package com.example.dlFx.controller;
 
-import com.example.dlFx.FxApplication;
+import com.example.dlFx.dto.MainPageDto;
+import com.example.dlFx.httpRequests.HttpRequests;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,9 +15,12 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLDocumentController2 implements Initializable {
@@ -64,10 +70,6 @@ public class FXMLDocumentController2 implements Initializable {
         //fxApplication.showFXMLDocument();
     }
 
-    private void handleSelectionRoomNumber(String val) {
-
-    }
-
     @FXML
     public void vacate_occupy_btnClicked() throws IOException {
 
@@ -93,10 +95,26 @@ public class FXMLDocumentController2 implements Initializable {
     }
 
 
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        JsonNode node = HttpRequests.GetRequest("api/page");
+        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+        mainPageDto.getList().replaceAll(s -> s.replace(",", "  f"));
+        choiceBox_roomNumber.getItems().setAll(mainPageDto.getList());
+        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionBuilding(newVal));
+    }
 
-        choiceBox_roomNumber.getItems().addAll(rooms);
+    @SneakyThrows
+    private void handleSelectionBuilding(String val) {
+        JsonNode node = HttpRequests.GetRequest("api/page/" + val.replace("  f", "/"));
+        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+        choiceBox_switch.getItems().clear();
+        choiceBox_switch.getItems().setAll(mainPageDto.getList());
         choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(newVal));
+    }
+
+    private void handleSelectionRoomNumber(String newVal) {
+
     }
 }

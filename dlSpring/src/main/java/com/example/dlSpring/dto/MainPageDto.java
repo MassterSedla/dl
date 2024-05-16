@@ -6,11 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthorizedUserDto implements MainDto {
-    private String name;
-    private String password;
+public class MainPageDto implements MainDto {
+    private Set<String> list;
 }
