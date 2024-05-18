@@ -5,7 +5,7 @@ module com.example.dlFx {
         requires com.fasterxml.jackson.databind;
         requires static lombok;
 
-    opens com.example.dlFx to javafx.fxml;
+        opens com.example.dlFx to javafx.fxml;
         opens com.example.dlFx.controller to javafx.fxml;
         opens com.example.dlFx.dto to com.fasterxml.jackson.databind;
         opens com.example.dlFx.model to com.fasterxml.jackson.databind;

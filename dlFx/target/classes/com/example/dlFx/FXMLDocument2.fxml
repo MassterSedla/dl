@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="dashboard_form" prefHeight="700.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController2">
+<AnchorPane fx:id="dashboard_form" prefHeight="700.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController2">
    <children>
       <BorderPane fx:id="dashboard_form_greeting" prefHeight="700.0" prefWidth="1050.0">
          <top>
@@ -71,21 +63,27 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="choiceBox_roomNumber" layoutX="13.0" layoutY="250.0" prefWidth="170.0" style="-fx-border-color: #a2ff96; -fx-border-radius: 3; -fx-border-width: 2;" styleClass="cb" stylesheets="@designMain.css" />
-                  <Label layoutX="15.0" layoutY="220.0" text="Choose a room" textFill="#a2ff96">
+                  <Label layoutX="21.0" layoutY="250.0" text="Select the building" textFill="#fca311">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
+                  <ChoiceBox fx:id="choiceBox_building" layoutX="18.0" layoutY="275.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-width: 2; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
+                  <Label layoutX="21.0" layoutY="356.0" text="Choose a room" textFill="#a2ff96">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="choiceBox_roomNumber" layoutX="18.0" layoutY="381.0" prefWidth="170.0" style="-fx-border-color: #a2ff96; -fx-border-radius: 3; -fx-border-width: 2;" styleClass="cb" stylesheets="@designMain.css" />
                   <Separator layoutY="190.0" prefWidth="200.0" />
                   <Separator layoutY="155.0" prefWidth="200.0" />
                   <Separator layoutY="340.0" prefWidth="200.0" />
-                  <ChoiceBox fx:id="choiceBox_switch" layoutX="13.0" layoutY="380.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-width: 2; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
-                  <Label layoutX="15.0" layoutY="350.0" text="Select the switch" textFill="#fca311">
+                  <Label layoutX="21.0" layoutY="448.0" text="Select the switch" textFill="#fca311">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
+                  <ChoiceBox fx:id="choiceBox_switch" layoutX="18.0" layoutY="473.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-width: 2; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
                </children>
             </AnchorPane>
          </left>
@@ -100,14 +98,13 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="800.0">
                                        <children>
-                                          <TableView prefHeight="200.0" prefWidth="800.0">
+                                          <TableView fx:id="switchTable" prefHeight="200.0" prefWidth="800.0">
                                              <columns>
-                                                <TableColumn maxWidth="1000.0" minWidth="50.0" prefWidth="50.0" text="№" />
-                                                <TableColumn maxWidth="1000.0" minWidth="100.0" prefWidth="120.0" text="Switch Port Number" />
-                                                <TableColumn minWidth="100.0" prefWidth="200.0" text="Equipment Type" />
-                                                <TableColumn maxWidth="1000.0" minWidth="100.0" prefWidth="150.0" text="Workload, Mbps" />
-                                                <TableColumn minWidth="50.0" prefWidth="100.0" text="PoE,  w" />
-                                                <TableColumn minWidth="100.0" prefWidth="200.0" text="Comments" />
+                                                <TableColumn fx:id="tableColumn_port" maxWidth="1000.0" minWidth="55.0" prefWidth="55.0" text="Port" />
+                                                <TableColumn fx:id="tableColumn_type" minWidth="100.0" prefWidth="189.0" text="Equipment Type" />
+                                                <TableColumn fx:id="tableColumn_trafficLoad" maxWidth="1000.0" minWidth="100.0" prefWidth="162.0" text="Workload, Mbps" />
+                                                <TableColumn fx:id="tableColumn_powerLoad" minWidth="50.0" prefWidth="164.0" text="PoE,  w" />
+                                                <TableColumn fx:id="tableColumn_comment" minWidth="100.0" prefWidth="200.0" text="Comments" />
                                              </columns>
                                           </TableView>
                                        </children>

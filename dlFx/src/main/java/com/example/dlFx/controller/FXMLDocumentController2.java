@@ -2,6 +2,8 @@ package com.example.dlFx.controller;
 
 import com.example.dlFx.dto.MainPageDto;
 import com.example.dlFx.httpRequests.HttpRequests;
+import com.example.dlFx.model.EquipmentWithPort;
+import com.example.dlFx.model.Switch;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
@@ -9,9 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,11 +20,10 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLDocumentController2 implements Initializable {
+
 
     @FXML
     private AnchorPane dashboard_form;
@@ -41,27 +41,47 @@ public class FXMLDocumentController2 implements Initializable {
     private Button vacate_occupy_btn;
 
     @FXML
+    private ChoiceBox<String> choiceBox_building;
+
+    @FXML
     private ChoiceBox<String> choiceBox_roomNumber;
 
     @FXML
     private ChoiceBox<String> choiceBox_switch;
 
-    private String[] rooms = {"E.1.015.1", "F.1.001.1", "B.2.044"};
+    @FXML
+    private TableView<EquipmentWithPort> switchTable;
+
+    @FXML
+    private TableColumn<EquipmentWithPort, Integer> tableColumn_port;
+
+    @FXML
+    private TableColumn<EquipmentWithPort, String> tableColumn_type;
+
+    @FXML
+    private TableColumn<EquipmentWithPort, Integer> tableColumn_trafficLoad;
+
+    @FXML
+    private TableColumn<EquipmentWithPort, Integer> tableColumn_powerLoad;
+
+    @FXML
+    private TableColumn<EquipmentWithPort, String> tableColumn_comment;
+
 
     private FXMLLoader fxmlLoader;
-
     // Закрыть окно
+
     public void dashboard_close() {
         System.exit(0);
     }
-
     // Свернуть окно
+
     public void dashboard_minimize() {
         Stage stage = (Stage)dashboard_form.getScene().getWindow();
         stage.setIconified(true);
     }
-
 //     Назад на страницу авторизации
+
     @FXML
     private void switchToFXMLDocument() {
 
@@ -100,21 +120,38 @@ public class FXMLDocumentController2 implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         JsonNode node = HttpRequests.GetRequest("api/page");
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
-        mainPageDto.getList().replaceAll(s -> s.replace(",", "  f"));
-        choiceBox_roomNumber.getItems().setAll(mainPageDto.getList());
-        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionBuilding(newVal));
+        choiceBox_building.getItems().setAll(mainPageDto.getList());
+        choiceBox_building.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionBuilding(newVal));
     }
 
     @SneakyThrows
     private void handleSelectionBuilding(String val) {
-        JsonNode node = HttpRequests.GetRequest("api/page/" + val.replace("  f", "/"));
+        JsonNode node = HttpRequests.GetRequest("api/page/" + val);
+        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+        choiceBox_roomNumber.getItems().clear();
+        choiceBox_roomNumber.getItems().setAll(mainPageDto.getList());
+        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(val, newVal));
+    }
+
+    @SneakyThrows
+    private void handleSelectionRoomNumber(String val, String newVal) {
+        JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal);
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         choiceBox_switch.getItems().clear();
         choiceBox_switch.getItems().setAll(mainPageDto.getList());
-        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(newVal));
+        choiceBox_switch.valueProperty().addListener((obs, oldVal, switchNumber) -> handleSelectionSwitchNumber(val, newVal, switchNumber));
     }
 
-    private void handleSelectionRoomNumber(String newVal) {
-
+    @SneakyThrows
+    private void handleSelectionSwitchNumber(String val, String newVal, String switchNumber) {
+        JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal + "/" + switchNumber);
+        Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
+        switchTable.getItems().clear();
+        tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
+        tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tableColumn_trafficLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentTrafficLoad"));
+        tableColumn_powerLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentPowerLoad"));
+        tableColumn_comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        switchTable.getItems().addAll(aSwitch.getEquipments());
     }
 }

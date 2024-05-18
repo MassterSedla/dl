@@ -1,6 +1,5 @@
 package com.example.dlSpring.dto;
 
-import com.example.dlSpring.dto.main.MainDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +11,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MainPageDto implements MainDto {
+public class MainPageDto {
     private Set<String> list;
 }

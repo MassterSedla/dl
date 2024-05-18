@@ -27,7 +27,6 @@ module com.example.dlSpring {
     opens com.example.dlSpring.config to spring.core, spring.beans, spring.context;
     opens com.example.dlSpring.model to org.hibernate.orm.core, spring.core, com.example.dlFx;
     opens com.example.dlSpring.dto to spring.core, com.example.dlFx;
-    opens com.example.dlSpring.dto.main to spring.core, com.example.dlFx;
     opens com.example.dlSpring.service to spring.beans, spring.core;
     opens com.example.dlSpring.controller to spring.beans, spring.core, spring.web;
     opens com.example.dlSpring.in to spring.beans;
@@ -40,7 +39,6 @@ module com.example.dlSpring {
     exports com.example.dlSpring.service;
     exports com.example.dlSpring.repository;
     exports com.example.dlSpring.dto;
-    exports com.example.dlSpring.dto.main;
     exports com.example.dlSpring.in;
     exports com.example.dlSpring.util;
     exports com.example.dlSpring.exception;
