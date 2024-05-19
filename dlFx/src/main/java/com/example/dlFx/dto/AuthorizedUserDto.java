@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthorizedUserDto implements MainDto {
 
-    private String name;
+    private String username;
     private String password;
 }

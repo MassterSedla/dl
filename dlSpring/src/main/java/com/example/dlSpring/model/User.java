@@ -22,18 +22,29 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @Column(unique = true)
+    private String username;
+    private String firstname;
+    private String surname;
+    @Column(unique = true)
+    private String email;
     private String password;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String firstname, String surname, String email, String password) {
+        this.username = username;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.email = email;
         this.password = password;
     }
 
-    public User(String name, String password, Set<Role> roles) {
-        this.name = name;
+    public User(String username, String firstname, String surname, String email, String password, Set<Role> roles) {
+        this.username = username;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.email = email;
         this.password = password;
         this.roles = roles;
     }
@@ -65,7 +76,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     public String getRolesToString() {
@@ -80,7 +91,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles;
     }

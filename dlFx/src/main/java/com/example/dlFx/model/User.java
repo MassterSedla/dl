@@ -12,20 +12,11 @@ import java.util.Set;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
-
     private Long id;
-    private String name;
+    private String username;
+    private String firstname;
+    private String surname;
+    private String email;
     private String password;
     private Set<Role> roles;
-
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public User(String name, String password, Set<Role> roles) {
-        this.name = name;
-        this.password = password;
-        this.roles = roles;
-    }
 }

@@ -10,7 +10,6 @@ import java.util.Set;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Role {
-
     private Long id;
     private String name;
     private Set<User> users;
@@ -18,10 +17,4 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
-
-    public Role(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
 }

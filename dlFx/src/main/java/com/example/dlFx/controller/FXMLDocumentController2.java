@@ -6,6 +6,8 @@ import com.example.dlFx.model.EquipmentWithPort;
 import com.example.dlFx.model.Switch;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,13 +16,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import java.io.IOException;
+import java.io.PipedOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FORT_AWESOME;
 
 public class FXMLDocumentController2 implements Initializable {
 
@@ -78,6 +85,9 @@ public class FXMLDocumentController2 implements Initializable {
 
     @FXML
     private TableColumn<EquipmentWithPort, String> tableColumn_comment;
+
+    @FXML
+    private AnchorPane anchorPane_ports;
 
 
     private FXMLLoader fxmlLoader;
@@ -169,6 +179,43 @@ public class FXMLDocumentController2 implements Initializable {
         if (switchNumber != null) {
             JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal + "/" + switchNumber);
             Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
+
+            int countPort = aSwitch.getNumberOfPort();
+            Button[] buttons = new Button[countPort];
+            Label[] labels = new Label[countPort];
+            int k = 0;
+            int distance = 43;
+            for (int i = 0; i < countPort / 12; i++) {
+                for (int j = 0; j < 12; j++) {
+                    Button button = new Button();
+                    button.setLayoutX(15.0 + j * 65);
+                    button.setLayoutY(14.0 + i * 80);
+                    button.setPrefWidth(65.0);
+                    button.setPrefHeight(39.0);
+                    button.setMnemonicParsing(false);
+                    button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
+                    Label label = new Label();
+                    if (k == 10) {
+                        distance = 40;
+                    }
+                    label.setLayoutX(distance + j * 65);
+                    label.setLayoutY(53.0 + i * 80);
+                    label.setFont(new Font("Ayuthaya", 14.0));
+                    label.setText(String.valueOf(k + 1));
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            System.out.println(label.getText());
+                        }
+                    });
+                    buttons[k] = button;
+                    labels[k] = label;
+                    k++;
+                }
+            }
+            anchorPane_ports.getChildren().addAll(buttons);
+            anchorPane_ports.getChildren().addAll(labels);
+
             tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
             tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
             tableColumn_trafficLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentTrafficLoad"));

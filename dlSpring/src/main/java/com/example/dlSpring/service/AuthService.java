@@ -23,13 +23,13 @@ public class AuthService {
     public ResponseEntity<?> createAuthToken(AuthorizedUserDto authorizedUserDto) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authorizedUserDto.getName(), authorizedUserDto.getPassword()));
+                    new UsernamePasswordAuthenticationToken(authorizedUserDto.getUsername(), authorizedUserDto.getPassword()));
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(new AuthException(HttpStatus.UNAUTHORIZED.value(),
                     "Incorrect login or password"), HttpStatus.UNAUTHORIZED);
         }
 
-        User user = userService.getUserByName(authorizedUserDto.getName());
+        User user = userService.getUserByUsername(authorizedUserDto.getUsername());
         String token = jwtUtil.generatedToken(user);
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(
