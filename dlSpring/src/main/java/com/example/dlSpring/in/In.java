@@ -257,6 +257,12 @@ public class In implements CommandLineRunner {
 //                switch0,
 //                17
 //        ));
-
+//
+//        for (int i = 1; i <= 30; i++) {
+//            Switch s = switchRepository.findById((long) i).get();
+//            s.setNumberOfPort(24);
+//            switchRepository.save(s);
+//        }
+//
     }
 }

@@ -14,6 +14,7 @@ public class SwitchDto {
     private String room;
     private int permissibleTrafficLoad;
     private int permissiblePowerLoad;
+    private int numberOfPort;
     private List<EquipmentWithPortDto> equipments;
 
     public SwitchDto(Switch aSwitch) {
@@ -24,6 +25,7 @@ public class SwitchDto {
         this.room = aSwitch.getRoom();
         this.permissibleTrafficLoad = aSwitch.getPermissibleTrafficLoad();
         this.permissiblePowerLoad = aSwitch.getPermissiblePowerLoad();
+        this.numberOfPort = aSwitch.getNumberOfPort();
         this.equipments = aSwitch.getEquipmentAtSwitches().stream().map(EquipmentWithPortDto::new).toList();
     }
 }

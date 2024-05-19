@@ -373,7 +373,7 @@
                                           <Font name="Gill Sans SemiBold" size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="264.0" layoutY="11.0" text="18/24">
+                                    <Label fx:id="label_occupiedPorts" layoutX="264.0" layoutY="11.0">
                                        <font>
                                           <Font name="Gill Sans" size="16.0" />
                                        </font>
@@ -383,7 +383,7 @@
                                           <Font name="Gill Sans SemiBold" size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="264.0" layoutY="39.0" text="6">
+                                    <Label fx:id="label_availablePorts" layoutX="264.0" layoutY="39.0">
                                        <font>
                                           <Font name="Gill Sans" size="16.0" />
                                        </font>
@@ -392,22 +392,22 @@
                               </AnchorPane>
                               <AnchorPane layoutX="420.0" layoutY="44.0" prefHeight="70.0" prefWidth="350.0" styleClass="bg-white-2" stylesheets="@designMain.css">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="11.0" text="Total load on the switch:">
+                                    <Label layoutX="15.0" layoutY="11.0" text="Traffic load on the switch:">
                                        <font>
                                           <Font name="Gill Sans SemiBold" size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="195.0" layoutY="11.0" text="650 Mbs">
+                                    <Label fx:id="label_trafficLoad" layoutX="212.0" layoutY="11.0">
                                        <font>
                                           <Font name="Gill Sans" size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="15.0" layoutY="39.0" text="There is more in stock:">
+                                    <Label layoutX="15.0" layoutY="39.0" text="Power load on the switch:">
                                        <font>
                                           <Font name="Gill Sans SemiBold" size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="195.0" layoutY="39.0" text="350 Mbs">
+                                    <Label fx:id="label_powerLoad" layoutX="212.0" layoutY="39.0">
                                        <font>
                                           <Font name="Gill Sans" size="16.0" />
                                        </font>

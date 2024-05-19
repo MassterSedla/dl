@@ -26,6 +26,18 @@ public class FXMLDocumentController2 implements Initializable {
 
 
     @FXML
+    public Label label_occupiedPorts;
+
+    @FXML
+    public Label label_availablePorts;
+
+    @FXML
+    public Label label_trafficLoad;
+
+    @FXML
+    public Label label_powerLoad;
+
+    @FXML
     private AnchorPane dashboard_form;
 
     @FXML
@@ -122,36 +134,52 @@ public class FXMLDocumentController2 implements Initializable {
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         choiceBox_building.getItems().setAll(mainPageDto.getList());
         choiceBox_building.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionBuilding(newVal));
+        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(choiceBox_building.getValue(), newVal));
+        choiceBox_switch.valueProperty().addListener((obs, oldVal, switchNumber) ->
+                handleSelectionSwitchNumber(choiceBox_building.getValue(), choiceBox_roomNumber.getValue(), switchNumber));
     }
 
     @SneakyThrows
     private void handleSelectionBuilding(String val) {
-        JsonNode node = HttpRequests.GetRequest("api/page/" + val);
-        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         choiceBox_roomNumber.getItems().clear();
-        choiceBox_roomNumber.getItems().setAll(mainPageDto.getList());
-        choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(val, newVal));
+        if (val != null) {
+            JsonNode node = HttpRequests.GetRequest("api/page/" + val);
+            MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+            choiceBox_roomNumber.getItems().setAll(mainPageDto.getList());
+        }
     }
 
     @SneakyThrows
     private void handleSelectionRoomNumber(String val, String newVal) {
-        JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal);
-        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         choiceBox_switch.getItems().clear();
-        choiceBox_switch.getItems().setAll(mainPageDto.getList());
-        choiceBox_switch.valueProperty().addListener((obs, oldVal, switchNumber) -> handleSelectionSwitchNumber(val, newVal, switchNumber));
+        if (newVal != null) {
+            JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal);
+            MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+            choiceBox_switch.getItems().setAll(mainPageDto.getList());
+        }
     }
 
     @SneakyThrows
     private void handleSelectionSwitchNumber(String val, String newVal, String switchNumber) {
-        JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal + "/" + switchNumber);
-        Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
         switchTable.getItems().clear();
-        tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
-        tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        tableColumn_trafficLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentTrafficLoad"));
-        tableColumn_powerLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentPowerLoad"));
-        tableColumn_comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-        switchTable.getItems().addAll(aSwitch.getEquipments());
+        label_availablePorts.setText("");
+        label_occupiedPorts.setText("");
+        label_trafficLoad.setText("");
+        label_powerLoad.setText("");
+        if (switchNumber != null) {
+            JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal + "/" + switchNumber);
+            Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
+            tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
+            tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
+            tableColumn_trafficLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentTrafficLoad"));
+            tableColumn_powerLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentPowerLoad"));
+            tableColumn_comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+            switchTable.getItems().addAll(aSwitch.getEquipments());
+
+            label_availablePorts.setText(aSwitch.getAvailablePorts());
+            label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
+            label_trafficLoad.setText(aSwitch.getTrafficLoad());
+            label_powerLoad.setText(aSwitch.getPowerLoad());
+        }
     }
 }
