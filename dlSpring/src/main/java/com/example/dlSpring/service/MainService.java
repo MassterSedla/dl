@@ -1,18 +1,17 @@
 package com.example.dlSpring.service;
 
+import com.example.dlSpring.dto.MainPageDto;
 import com.example.dlSpring.dto.SwitchDto;
-import com.example.dlSpring.model.Switch;
+import com.example.dlSpring.model.EquipmentAtSwitch;
 import com.example.dlSpring.repository.EquipmentAtSwitchRepository;
 import com.example.dlSpring.repository.EquipmentRepository;
 import com.example.dlSpring.repository.SwitchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +36,31 @@ public class MainService {
         return new SwitchDto(switchRepository.findByBuildingAndRoomAndNumber(building, room, number));
     }
 
+    @Transactional
+    public void deleteEquipment(Long switchId, int port) {
+        equipmentAtSwitchRepository.deleteBySwitchIdAndPort(switchId, port);
+    }
+
+    public Set<String> listOfType() {
+        return equipmentRepository.findAllType();
+    }
+
+    public Set<String> listOfModel(String type) {
+        return equipmentRepository.findAllModelByType(type);
+    }
+
+    public Integer getEquipmentIdByTypeAndModel(String type, String model) {
+        return equipmentRepository.findEquipmentIdByTypeAndModel(type, model);
+    }
+
+    public void occupyPort(MainPageDto mainPageDto) {
+        List<String> list = mainPageDto.getList();
+        equipmentAtSwitchRepository.save(
+                new EquipmentAtSwitch(
+                        equipmentRepository.findById(Long.valueOf(list.get(0))).get(),
+                        switchRepository.findById(Long.valueOf(list.get(1))).get(),
+                        Integer.parseInt(list.get(2))
+                )
+        );
+    }
 }

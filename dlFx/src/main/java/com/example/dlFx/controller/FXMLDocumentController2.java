@@ -6,8 +6,6 @@ import com.example.dlFx.model.EquipmentWithPort;
 import com.example.dlFx.model.Switch;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,30 +17,31 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import java.io.IOException;
-import java.io.PipedOutputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FORT_AWESOME;
 
 public class FXMLDocumentController2 implements Initializable {
-
+    @FXML
+    private Label label_occupiedPorts;
 
     @FXML
-    public Label label_occupiedPorts;
+    private Label label_availablePorts;
 
     @FXML
-    public Label label_availablePorts;
+    private Label label_trafficLoad;
 
     @FXML
-    public Label label_trafficLoad;
-
-    @FXML
-    public Label label_powerLoad;
+    private Label label_powerLoad;
 
     @FXML
     private AnchorPane dashboard_form;
@@ -89,6 +88,8 @@ public class FXMLDocumentController2 implements Initializable {
     @FXML
     private AnchorPane anchorPane_ports;
 
+    private int selectedPort;
+    private Long selectedSwitchId;
 
     private FXMLLoader fxmlLoader;
     // Закрыть окно
@@ -113,29 +114,16 @@ public class FXMLDocumentController2 implements Initializable {
     }
 
     @FXML
-    public void vacate_occupy_btnClicked() throws IOException {
-
+    public void openDialogPage() throws IOException {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/example/dlFx/DialogPane.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-
-        // Создание DialogPane
-        DialogPane dialogPane = new DialogPane();
-
-        // Создание нового окна
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL);
-
-        // Установка DialogPane в качестве содержимого окна
         dialogStage.setScene(scene);
         dialogStage.show();
-
-
-        //stage.setResizable(false);
-        //stage.centerOnScreen();
     }
-
 
     @SneakyThrows
     @Override
@@ -171,62 +159,128 @@ public class FXMLDocumentController2 implements Initializable {
 
     @SneakyThrows
     private void handleSelectionSwitchNumber(String val, String newVal, String switchNumber) {
+        cleanInformationAboutSwitch();
+        if (switchNumber != null) {
+            fillingInformationAboutSwitch("api/page/" + val + "/" + newVal + "/" + switchNumber);
+        }
+    }
+
+    @SneakyThrows
+    private void fillingInformationAboutSwitch(String url) {
+        JsonNode node = HttpRequests.GetRequest(url);
+        Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
+        List<Integer> portList = aSwitch.getEquipments().stream().mapToInt(EquipmentWithPort::getPort).boxed().toList();
+
+        int countPort = aSwitch.getNumberOfPort();
+        Button[] buttons = new Button[countPort];
+        Label[] labels = new Label[countPort];
+        int k = 0;
+        int distance = 37;
+        for (int i = 0; i < countPort / 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                Button button = new Button();
+                button.setLayoutX(9.0 + j * 66);
+                button.setLayoutY(14.0 + i * 80);
+                button.setPrefWidth(65.0);
+                button.setPrefHeight(39.0);
+                button.setMnemonicParsing(false);
+                button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
+                Label label = new Label();
+                if (k == 10) {
+                    distance = 34;
+                }
+                label.setLayoutX(distance + j * 66);
+                label.setLayoutY(53.0 + i * 80);
+                label.setFont(new Font("Ayuthaya", 14.0));
+                label.setText(String.valueOf(k + 1));
+                ContextMenu contextMenu = new ContextMenu();
+                if (portList.contains(k + 1)) {
+                    MenuItem menuItem1 = new MenuItem("Show");
+                    MenuItem menuItem2 = new MenuItem("Release");
+                    MenuItem menuItem3 = new MenuItem("Comment");
+                    contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
+                    menuItem1.setOnAction(event -> selectCellByValue(Integer.parseInt(label.getText())));
+                    menuItem2.setOnAction(event -> releasePort(aSwitch.getId(), Integer.parseInt(label.getText()), url));
+                    menuItem3.setOnAction(event -> selectCellByValue(Integer.parseInt(label.getText())));
+                    button.getStyleClass().add("port-btn-occupied");
+                } else {
+                    MenuItem menuItem4 = new MenuItem("Occupy");
+                    contextMenu.getItems().addAll(menuItem4);
+                    menuItem4.setOnAction(event -> {
+                        try {
+                            selectedPort = Integer.parseInt(label.getText());
+                            selectedSwitchId = aSwitch.getId();
+                            openDialogPage();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    button.getStyleClass().add("port-btn-available");
+                }
+                button.setOnAction(event -> {
+                    if (!contextMenu.isShowing()) {
+                        contextMenu.show(button, button.getScene().getWindow().getX() + 236.5 + button.getLayoutX(),
+                                button.getScene().getWindow().getY() + 228.5 + button.getLayoutY() + button.getHeight());
+                    } else {
+                        contextMenu.hide();
+                    }
+                });
+                buttons[k] = button;
+                labels[k] = label;
+                k++;
+            }
+        }
+        anchorPane_ports.getChildren().addAll(buttons);
+        anchorPane_ports.getChildren().addAll(labels);
+
+        tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
+        tableColumn_port.setSortType(TableColumn.SortType.ASCENDING);
+        tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tableColumn_trafficLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentTrafficLoad"));
+        tableColumn_powerLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentPowerLoad"));
+        tableColumn_comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        switchTable.getItems().addAll(aSwitch.getEquipments());
+        switchTable.getSortOrder().add(tableColumn_port);
+
+
+        label_availablePorts.setText(aSwitch.getAvailablePorts());
+        label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
+        label_trafficLoad.setText(aSwitch.getTrafficLoad());
+        label_powerLoad.setText(aSwitch.getPowerLoad());
+    }
+
+    private void cleanInformationAboutSwitch() {
         switchTable.getItems().clear();
+        anchorPane_ports.getChildren().clear();
         label_availablePorts.setText("");
         label_occupiedPorts.setText("");
         label_trafficLoad.setText("");
         label_powerLoad.setText("");
-        if (switchNumber != null) {
-            JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal + "/" + switchNumber);
-            Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
+    }
 
-            int countPort = aSwitch.getNumberOfPort();
-            Button[] buttons = new Button[countPort];
-            Label[] labels = new Label[countPort];
-            int k = 0;
-            int distance = 43;
-            for (int i = 0; i < countPort / 12; i++) {
-                for (int j = 0; j < 12; j++) {
-                    Button button = new Button();
-                    button.setLayoutX(15.0 + j * 65);
-                    button.setLayoutY(14.0 + i * 80);
-                    button.setPrefWidth(65.0);
-                    button.setPrefHeight(39.0);
-                    button.setMnemonicParsing(false);
-                    button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
-                    Label label = new Label();
-                    if (k == 10) {
-                        distance = 40;
-                    }
-                    label.setLayoutX(distance + j * 65);
-                    label.setLayoutY(53.0 + i * 80);
-                    label.setFont(new Font("Ayuthaya", 14.0));
-                    label.setText(String.valueOf(k + 1));
-                    button.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent actionEvent) {
-                            System.out.println(label.getText());
-                        }
-                    });
-                    buttons[k] = button;
-                    labels[k] = label;
-                    k++;
-                }
+    private void selectCellByValue(int value) {
+        for (EquipmentWithPort item : switchTable.getItems()) {
+            if (tableColumn_port.getCellData(item) == value) {
+                switchTable.getSelectionModel().select(item);
+                switchTable.scrollTo(item);
+                break;
             }
-            anchorPane_ports.getChildren().addAll(buttons);
-            anchorPane_ports.getChildren().addAll(labels);
-
-            tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
-            tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
-            tableColumn_trafficLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentTrafficLoad"));
-            tableColumn_powerLoad.setCellValueFactory(new PropertyValueFactory<>("equipmentPowerLoad"));
-            tableColumn_comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-            switchTable.getItems().addAll(aSwitch.getEquipments());
-
-            label_availablePorts.setText(aSwitch.getAvailablePorts());
-            label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
-            label_trafficLoad.setText(aSwitch.getTrafficLoad());
-            label_powerLoad.setText(aSwitch.getPowerLoad());
         }
+    }
+
+    @SneakyThrows
+    private void releasePort(Long switchId, int port, String url) {
+        HttpRequests.DeleteRequest("api/page/" + switchId + "/" + port);
+        cleanInformationAboutSwitch();
+        fillingInformationAboutSwitch(url);
+    }
+
+    public void getFunctionHandleSelectionSwitchNumber(int equipmentId) throws IOException, URISyntaxException, InterruptedException {
+        HttpRequests.PostRequest(
+                new MainPageDto(List.of(String.valueOf(equipmentId),
+                        String.valueOf(selectedSwitchId), String.valueOf(selectedPort))),
+                "api/occupyPort");
+        handleSelectionSwitchNumber(choiceBox_building.getValue(),
+                choiceBox_roomNumber.getValue(), choiceBox_switch.getValue());
     }
 }

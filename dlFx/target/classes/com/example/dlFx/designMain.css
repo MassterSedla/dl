@@ -91,3 +91,23 @@
 #choice-box-popup-menu {
     -fx-background-color: #fff;
 }
+
+.port-btn-available {
+    -fx-background-color: linear-gradient(to bottom right, #2fb404, #d3f5cc);
+    -fx-effect: dropshadow(one-pass-box, #2fb404, 8, 0, -1, -1);
+}
+
+.port-btn-available:hover {
+    -fx-background-color: linear-gradient(to bottom right, #2fe000, #b6f8a9);
+    -fx-effect: dropshadow(one-pass-box, #2fe000, 8, 0, -1, -1);
+}
+
+.port-btn-occupied {
+    -fx-background-color:  linear-gradient(to bottom right, #c40101, #fad6d6);
+    -fx-effect: dropshadow(one-pass-box, #c40101, 8, 0, -1, -1);
+}
+
+.port-btn-occupied:hover {
+    -fx-background-color:  linear-gradient(to bottom right, #f80000, #fdacac);
+    -fx-effect: dropshadow(one-pass-box, #f80000, 8, 0, -1, -1);
+}

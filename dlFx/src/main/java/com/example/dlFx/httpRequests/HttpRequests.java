@@ -4,6 +4,7 @@ import com.example.dlFx.dto.AuthorizedUserDto;
 import com.example.dlFx.dto.main.MainDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,11 +20,8 @@ public class HttpRequests<T> {
 
     public static final String URI = "http://localhost:8080/";
 
+    @Setter
     private static String TOKEN = "";
-
-    public static void setTOKEN(String token) {
-        TOKEN = token;
-    }
 
     public static String AuthRequest(AuthorizedUserDto dto, String uri) throws IOException, InterruptedException, URISyntaxException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -49,7 +47,7 @@ public class HttpRequests<T> {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(URI + uri))
+                .uri(new URI(redactUrl(URI + uri)))
                 .setHeader("Content-Type", "application/json")
                 .setHeader("Authorization", "Bearer " + TOKEN)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(dto)))
@@ -65,7 +63,7 @@ public class HttpRequests<T> {
     public static JsonNode GetRequest(String uri) throws IOException, InterruptedException, URISyntaxException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(URI + uri))
+                .uri(new URI(redactUrl(URI + uri)))
                 .setHeader("Content-Type", "application/json")
                 .setHeader("Authorization", "Bearer " + TOKEN)
                 .GET()
@@ -84,7 +82,7 @@ public class HttpRequests<T> {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(URI + uri))
+                .uri(new URI(redactUrl(URI + uri)))
                 .setHeader("Content-Type", "application/json")
                 .setHeader("Authorization", "Bearer " + TOKEN)
                 .PUT(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(dto)))
@@ -97,21 +95,18 @@ public class HttpRequests<T> {
         return objectMapper.readTree(responseBody);
     }
 
-    public static JsonNode DeleteRequest(String uri) throws IOException, InterruptedException, URISyntaxException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
+    public static void DeleteRequest(String uri) throws IOException, InterruptedException, URISyntaxException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(URI + uri))
+                .uri(new URI(redactUrl(URI + uri)))
                 .setHeader("Content-Type", "application/json")
                 .setHeader("Authorization", "Bearer " + TOKEN)
                 .DELETE()
                 .build();
-        HttpResponse<InputStream> response = client.send(
-                request,
-                HttpResponse.BodyHandlers.ofInputStream()
-        );
-        InputStream responseBody = response.body();
-        return objectMapper.readTree(responseBody);
+        client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+    }
+
+    private static String redactUrl(String url) {
+        return url.replaceAll(" ", "_");
     }
 }

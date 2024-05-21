@@ -94,11 +94,11 @@
                      <children>
                         <AnchorPane prefHeight="260.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="375.0">
                            <children>
-                              <ScrollPane layoutX="5.0" layoutY="46.0" prefHeight="200.0" prefWidth="800.0">
+                              <ScrollPane layoutX="5.0" layoutY="8.0" prefHeight="240.0" prefWidth="800.0">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="800.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="800.0">
                                        <children>
-                                          <TableView fx:id="switchTable" prefHeight="200.0" prefWidth="800.0">
+                                          <TableView fx:id="switchTable" prefHeight="240.0" prefWidth="800.0">
                                              <columns>
                                                 <TableColumn fx:id="tableColumn_port" maxWidth="1000.0" minWidth="55.0" prefWidth="55.0" text="Port" />
                                                 <TableColumn fx:id="tableColumn_type" minWidth="100.0" prefWidth="189.0" text="Equipment Type" />
@@ -111,8 +111,6 @@
                                     </AnchorPane>
                                  </content>
                               </ScrollPane>
-                              <Button fx:id="vacate_occupy_btn" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#vacate_occupy_btnClicked" prefWidth="200.0" text="Vacate/Occupy port" />
-                              <Button layoutX="224.0" layoutY="10.0" mnemonicParsing="false" prefWidth="100.0" text="Save changes" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="anchorPane_ports" prefHeight="170.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0">

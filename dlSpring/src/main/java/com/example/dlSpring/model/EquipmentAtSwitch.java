@@ -26,6 +26,7 @@ public class EquipmentAtSwitch {
     @JsonBackReference
     private Switch aSwitch;
     private int port;
+    private String comments;
 
     public EquipmentAtSwitch(Equipment equipment, Switch aSwitch, int port) {
         this.equipment = equipment;

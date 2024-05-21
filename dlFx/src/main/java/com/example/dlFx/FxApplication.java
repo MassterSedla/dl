@@ -6,15 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.Getter;
 
 import java.io.IOException;
 
 public class FxApplication extends Application {
 
     private Stage primaryStage;
-    private FXMLLoader fxmlLoader;
+    @Getter
+    private static FXMLLoader fxmlLoader;
 
     private double x = 0;
     private double y = 0;
@@ -86,6 +89,8 @@ public class FxApplication extends Application {
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] args) {
 
