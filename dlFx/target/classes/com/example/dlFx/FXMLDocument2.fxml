@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -76,13 +77,19 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="choiceBox_building" layoutX="15.0" layoutY="235.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-width: 2; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
+                  <ChoiceBox fx:id="choiceBox_building" layoutX="15.0" layoutY="235.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-width: 2; -fx-border-radius: 3; -fx-background-color: #ffffff; -fx-background-insets: 1;" styleClass="cb" stylesheets="@designMain.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
                   <Label layoutX="18.0" layoutY="320.0" text="2 - Choose a room" textFill="#fca311">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="choiceBox_roomNumber" layoutX="15.0" layoutY="345.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-radius: 3; -fx-border-width: 2;" styleClass="cb" stylesheets="@designMain.css" />
+                  <ChoiceBox fx:id="choiceBox_roomNumber" layoutX="15.0" layoutY="345.0" prefWidth="170.0" style="-fx-border-color: #fca311; -fx-border-radius: 3; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-insets: 1;" styleClass="cb" stylesheets="@designMain.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
                   <Separator layoutY="190.0" prefWidth="200.0" />
                   <Separator layoutY="155.0" prefWidth="200.0" />
                   <Separator layoutY="300.0" prefWidth="200.0" />
@@ -91,7 +98,10 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="choiceBox_switch" layoutX="15.0" layoutY="455.0" prefWidth="170.0" style="-fx-border-color: #a2ff96; -fx-border-width: 2; -fx-border-radius: 3;" styleClass="cb" stylesheets="@designMain.css" />
+                  <ChoiceBox fx:id="choiceBox_switch" layoutX="15.0" layoutY="455.0" prefWidth="170.0" style="-fx-border-color: #a2ff96; -fx-border-width: 2; -fx-border-radius: 3; -fx-background-color: #ffffff; -fx-background-insets: 1;" styleClass="cb" stylesheets="@designMain.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></ChoiceBox>
                   <Separator layoutY="410.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
@@ -101,13 +111,13 @@
                <children>
                   <AnchorPane fx:id="dashboard_form_info" layoutX="-1.0" prefHeight="660.0" prefWidth="865.0" visible="false">
                      <children>
-                        <AnchorPane prefHeight="260.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="375.0">
+                        <AnchorPane maxWidth="810.0" prefHeight="265.0" prefWidth="810.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="370.0">
                            <children>
-                              <ScrollPane layoutX="5.0" layoutY="8.0" prefHeight="240.0" prefWidth="800.0">
+                              <ScrollPane layoutX="5.0" layoutY="8.0" maxWidth="800.0" prefHeight="240.0" prefWidth="800.0" stylesheets="@designMain.css">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="800.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="785.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
                                        <children>
-                                          <TableView fx:id="switchTable" prefHeight="240.0" prefWidth="800.0">
+                                          <TableView fx:id="switchTable" prefHeight="240.0" prefWidth="785.0" tableMenuButtonVisible="true">
                                              <columns>
                                                 <TableColumn fx:id="tableColumn_port" maxWidth="1000.0" minWidth="55.0" prefWidth="55.0" text="Port" />
                                                 <TableColumn fx:id="tableColumn_type" minWidth="100.0" prefWidth="189.0" text="Equipment Type" />
@@ -115,6 +125,9 @@
                                                 <TableColumn fx:id="tableColumn_powerLoad" minWidth="50.0" prefWidth="164.0" text="PoE,  w" />
                                                 <TableColumn fx:id="tableColumn_comment" minWidth="100.0" prefWidth="200.0" text="Comments" />
                                              </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
                                           </TableView>
                                        </children>
                                     </AnchorPane>
@@ -122,7 +135,7 @@
                               </ScrollPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="anchorPane_ports" prefHeight="170.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0">
+                        <AnchorPane fx:id="anchorPane_ports" prefHeight="170.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="180.0">
                            <children>
                               <!--                              <Label layoutX="44.0" layoutY="53.0" text="1">-->
                               <!--                                 <font>-->
@@ -367,14 +380,14 @@
                               <!--                              </Button>-->
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="130.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="25.0">
+                        <AnchorPane layoutX="28.0" layoutY="28.0" prefHeight="140.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="20.0">
                            <children>
                               <Label layoutX="370.0" layoutY="8.0" text="Switch">
                                  <font>
                                     <Font name="Gill Sans Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <AnchorPane layoutX="30.0" layoutY="44.0" prefHeight="70.0" prefWidth="350.0" styleClass="bg-white-2" stylesheets="@designMain.css">
+                              <AnchorPane layoutX="30.0" layoutY="44.0" prefHeight="70.0" prefWidth="350.0" styleClass="bg-white-2" stylesheets="@designMain.css" AnchorPane.leftAnchor="30.0">
                                  <children>
                                     <Label layoutX="14.0" layoutY="11.0" text="Number of occupied switch ports:">
                                        <font>
@@ -398,7 +411,7 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="420.0" layoutY="44.0" prefHeight="70.0" prefWidth="350.0" styleClass="bg-white-2" stylesheets="@designMain.css">
+                              <AnchorPane layoutX="420.0" layoutY="44.0" prefHeight="70.0" prefWidth="350.0" styleClass="bg-white-2" stylesheets="@designMain.css" AnchorPane.rightAnchor="30.0">
                                  <children>
                                     <Label layoutX="15.0" layoutY="11.0" text="Traffic load on the switch:">
                                        <font>
@@ -430,9 +443,9 @@
                      <children>
                         <AnchorPane layoutX="143.0" layoutY="57.0" prefHeight="75.0" prefWidth="580.0" styleClass="bg-white-2" stylesheets="@designMain.css" AnchorPane.topAnchor="55.0">
                            <children>
-                              <Label layoutX="212.0" layoutY="23.0" text="Welcome back!">
+                              <Label layoutX="212.0" layoutY="23.0" text="Welcome back!" textFill="#0359bc">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
                            </children>
@@ -446,9 +459,9 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <Label layoutX="133.0" layoutY="181.0" text="In the menu on the left, select the room for work and the equipment you are interested in.">
+                        <Label layoutX="98.0" layoutY="181.0" lineSpacing="1.0" maxWidth="670.0" text="Hello! To get started, select the building, work space, and equipment you are interested in from menu on the left." textAlignment="CENTER" wrapText="true" AnchorPane.topAnchor="180.0">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                      </children>

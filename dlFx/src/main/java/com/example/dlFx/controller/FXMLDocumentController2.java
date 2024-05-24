@@ -47,6 +47,12 @@ public class FXMLDocumentController2 implements Initializable {
     private AnchorPane dashboard_form;
 
     @FXML
+    private AnchorPane dashboard_form_greeting;
+
+    @FXML
+    private AnchorPane dashboard_form_info;
+
+    @FXML
     private Button dashboard_close_btn;
 
     @FXML
@@ -92,19 +98,19 @@ public class FXMLDocumentController2 implements Initializable {
     private Long selectedSwitchId;
 
     private FXMLLoader fxmlLoader;
-    // Закрыть окно
 
+    // Закрыть окно
     public void dashboard_close() {
         System.exit(0);
     }
-    // Свернуть окно
 
+    // Свернуть окно
     public void dashboard_minimize() {
         Stage stage = (Stage)dashboard_form.getScene().getWindow();
         stage.setIconified(true);
     }
-//     Назад на страницу авторизации
 
+    // Назад на страницу авторизации
     @FXML
     private void switchToFXMLDocument() {
 
@@ -242,11 +248,13 @@ public class FXMLDocumentController2 implements Initializable {
         switchTable.getItems().addAll(aSwitch.getEquipments());
         switchTable.getSortOrder().add(tableColumn_port);
 
-
         label_availablePorts.setText(aSwitch.getAvailablePorts());
         label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
         label_trafficLoad.setText(aSwitch.getTrafficLoad());
         label_powerLoad.setText(aSwitch.getPowerLoad());
+
+        dashboard_form_greeting.setVisible(false);
+        dashboard_form_info.setVisible(true);
     }
 
     private void cleanInformationAboutSwitch() {
@@ -256,6 +264,8 @@ public class FXMLDocumentController2 implements Initializable {
         label_occupiedPorts.setText("");
         label_trafficLoad.setText("");
         label_powerLoad.setText("");
+        dashboard_form_info.setVisible(false);
+        dashboard_form_greeting.setVisible(true);
     }
 
     private void selectCellByValue(int value) {

@@ -66,13 +66,14 @@
     -fx-background-radius: 20; /* Радиус закругления углов */
 }
 
-.bg-white:hover {
+/*.bg-white:hover {
     -fx-effect: dropshadow(three-pass-box, #00B4D8, 8, 0, 0, 0);
-}
+}*/
 
 .bg-white-2 {
     -fx-background-color: #fff;
-    -fx-effect: dropshadow(three-pass-box, #9BC995, 8, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, #00B4D8, 8, 0, 0, 0);
+    /*-fx-effect: dropshadow(three-pass-box, #9BC995, 8, 0, 0, 0);*/
     /*-fx-background-radius: 8px;*/
     -fx-background-radius: 10; /* Радиус закругления углов */
 }
@@ -111,23 +112,31 @@
 }
 
 .port-btn-available {
-    -fx-background-color: linear-gradient(to bottom right, #2fb404, #d3f5cc);
-    -fx-effect: dropshadow(one-pass-box, #2fb404, 8, 0, -1, -1);
+    /*-fx-background-color: linear-gradient(to bottom right, #2fb404, #d3f5cc);*/
+    /*-fx-effect: dropshadow(one-pass-box, #2fb404, 8, 0, -1, -1);*/
+    -fx-background-color: linear-gradient(to bottom right, #92E6A7, #C9ECD1);
+    -fx-effect: dropshadow(three-pass-box, #2fb404, 8, 0, 1, 1);
 }
 
 .port-btn-available:hover {
-    -fx-background-color: linear-gradient(to bottom right, #2fe000, #b6f8a9);
-    -fx-effect: dropshadow(one-pass-box, #2fe000, 8, 0, -1, -1);
+    /*-fx-background-color: linear-gradient(to bottom right, #2fe000, #b6f8a9);*/
+    /*-fx-effect: dropshadow(one-pass-box, #2fe000, 8, 0, -1, -1);*/
+    -fx-background-color:  #4AD66D;
+    -fx-effect: dropshadow(one-pass-box, #2fb404, 8, 0, 1, 1);
 }
 
 .port-btn-occupied {
-    -fx-background-color:  linear-gradient(to bottom right, #c40101, #fad6d6);
-    -fx-effect: dropshadow(one-pass-box, #c40101, 8, 0, -1, -1);
+    /*-fx-background-color:  linear-gradient(to bottom right, #c40101, #fad6d6);*/
+    /*-fx-effect: dropshadow(one-pass-box, #c40101, 8, 0, -1, -1);*/
+    -fx-background-color: linear-gradient(to bottom right, #E23C4F, #FA7D8C);
+    -fx-effect: dropshadow(three-pass-box, #D4061E, 8, 0, 1, 1);
 }
 
 .port-btn-occupied:hover {
-    -fx-background-color:  linear-gradient(to bottom right, #f80000, #fdacac);
-    -fx-effect: dropshadow(one-pass-box, #f80000, 8, 0, -1, -1);
+    /*-fx-background-color:  linear-gradient(to bottom right, #f80000, #fdacac);*/
+    /*-fx-effect: dropshadow(one-pass-box, #f80000, 8, 0, -1, -1);*/
+    -fx-background-color:  #E7273D;
+    -fx-effect: dropshadow(one-pass-box, #D4061E, 8, 0, 1, 1);
 }
 
 /* Закругленные углы у окна */
@@ -137,3 +146,27 @@
     -fx-background-insets: 0, 0 1 1 0;
     -fx-border-color: grey;
 }
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10; /* Внешние отступы */
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: white; /* Цвет фона содержимого */
+    -fx-background-radius: 10; /* Радиус закругления углов содержимого */
+    -fx-border-radius: 10; /* Радиус закругления границ */
+    -fx-background-insets: 0; /* Внутренние отступы фона */
+    -fx-padding: 10; /* Внутренние отступы содержимого */
+}
+
+.scroll-pane .content {
+    -fx-background-color: white; /* Цвет фона содержимого */
+    -fx-background-radius: 15; /* Радиус закругления углов содержимого */
+    -fx-border-radius: 15; /* Радиус закругления границ */
+}
+
+
+
+
+
