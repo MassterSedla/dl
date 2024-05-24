@@ -10,7 +10,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="signIn_form" prefHeight="500.0" prefWidth="650.0" styleClass="bg-form" stylesheets="@designLogin.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController">
    <children>
       <Button fx:id="signIn_close" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#signIn_close" prefHeight="25.0" prefWidth="55.0" styleClass="close" stylesheets="@designLogin.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
@@ -18,7 +17,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="15.0" />
          </graphic>
       </Button>
-      <Button fx:id="signIn_minimize" layoutX="538.0" layoutY="2.0" mnemonicParsing="false" onAction="#signIn_minimize" prefHeight="25.0" prefWidth="55.0" styleClass="minimize" stylesheets="@designLogin.css">
+      <Button fx:id="signIn_minimize" layoutX="538.0" layoutY="2.0" mnemonicParsing="false" onAction="#signIn_minimize" prefHeight="25.0" prefWidth="55.0" styleClass="minimize" stylesheets="@designLogin.css" AnchorPane.topAnchor="2.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15.0" />
          </graphic>
@@ -29,9 +28,15 @@
             <Font name="Hiragino Sans W6" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="signIn_username" layoutX="200.0" layoutY="235.0" prefHeight="30.0" prefWidth="250.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
-      <PasswordField fx:id="signIn_password" layoutX="200.0" layoutY="276.0" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css" />
-      <Button fx:id="signIn_logIn_btn" layoutX="249.0" layoutY="360.0" mnemonicParsing="false" onAction="#switchToFXMLDocument2" prefHeight="35.0" prefWidth="150.0" styleClass="login-btn" stylesheets="@designLogin.css" text="Log In">
+      <TextField fx:id="signIn_username" layoutX="200.0" layoutY="245.0" prefHeight="30.0" prefWidth="250.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css">
+         <font>
+            <Font name="Hiragino Sans W4" size="16.0" />
+         </font></TextField>
+      <PasswordField fx:id="signIn_password" layoutX="200.0" layoutY="285.0" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css">
+         <font>
+            <Font name="Hiragino Sans W4" size="16.0" />
+         </font></PasswordField>
+      <Button fx:id="signIn_logIn_btn" layoutX="249.0" layoutY="380.0" mnemonicParsing="false" onAction="#switchToFXMLDocument2" prefHeight="35.0" prefWidth="150.0" styleClass="login-btn" stylesheets="@designLogin.css" text="Log In">
          <font>
             <Font name="Ayuthaya" size="20.0" />
          </font>
@@ -43,5 +48,6 @@
             </DropShadow>
          </effect>
       </Button>
+      <Label fx:id="label_error" alignment="CENTER" layoutX="242.0" layoutY="320.0" prefHeight="17.0" prefWidth="167.0" text="Label" textFill="#ff1616" visible="false" AnchorPane.topAnchor="320.0" />
    </children>
 </AnchorPane>

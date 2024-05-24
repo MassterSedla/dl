@@ -36,7 +36,7 @@ public class MainService {
         return new SwitchDto(switchRepository.findByBuildingAndRoomAndNumber(building, room, number));
     }
 
-    @Transactional
+    //@Transactional
     public void deleteEquipment(Long switchId, int port) {
         equipmentAtSwitchRepository.deleteBySwitchIdAndPort(switchId, port);
     }

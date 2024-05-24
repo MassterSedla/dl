@@ -6,10 +6,7 @@ import com.example.dlFx.httpRequests.HttpRequests;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -34,6 +31,8 @@ public class FXMLDocumentController implements Initializable {
     private PasswordField signIn_password;
     @FXML
     private TextField signIn_username;
+    @FXML
+    private Label label_error;
 
 
     // Закрыть окно авторизации
@@ -62,16 +61,22 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void switchToFXMLDocument2() throws IOException, URISyntaxException, InterruptedException {
         AuthorizedUserDto authorizedUserDto = new AuthorizedUserDto(signIn_username.getText(), signIn_password.getText());
-        String uri = "login";
-        String response = HttpRequests.AuthRequest(authorizedUserDto, uri);
-        if (response.contains(HttpRequests.AUTH_EXCEPTION)) {
-//            label.setText(HttpRequests.AUTH_EXCEPTION);
-            signIn_username.setText("");
-            signIn_password.setText("");
+        if (signIn_username.getText().isEmpty() || signIn_password.getText().isEmpty()) {
+            label_error.setText("Fill in all the fields!");
+            label_error.setVisible(true);
         } else {
-            HttpRequests.setTOKEN(response);
-            Stage stage = (Stage) signIn_logIn_btn.getScene().getWindow();
-            new FxApplication().showFXMLDocument2(stage);
+            String uri = "login";
+            String response = HttpRequests.AuthRequest(authorizedUserDto, uri);
+            if (response.contains(HttpRequests.AUTH_EXCEPTION)) {
+                label_error.setText(HttpRequests.AUTH_EXCEPTION);
+                label_error.setVisible(true);
+                signIn_username.setText("");
+                signIn_password.setText("");
+            } else {
+                HttpRequests.setTOKEN(response);
+                Stage stage = (Stage) signIn_logIn_btn.getScene().getWindow();
+                new FxApplication().showFXMLDocument2(stage);
+            }
         }
     }
 

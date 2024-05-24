@@ -34,6 +34,7 @@ public class FxApplication extends Application {
             fxmlLoader.setLocation(getClass().getResource("FXMLDocument.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
 
             // Этот и следующий методы позволяют перемещать окно приложения на экране
             root.setOnMousePressed((MouseEvent event) -> {
@@ -49,8 +50,11 @@ public class FxApplication extends Application {
             });
 // --------------------------------------------------------------------------------------
 
+            // Применяем стили для закругленных углов
+            scene.getStylesheets().add(getClass().getResource("designLogin.css").toExternalForm());
+
             primaryStage.setResizable(false);
-            primaryStage.initStyle(StageStyle.TRANSPARENT);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);     // Настраиваем окно без рамки
             primaryStage.setScene(scene);
             primaryStage.show();
 
