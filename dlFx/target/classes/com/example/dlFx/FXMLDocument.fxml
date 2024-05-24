@@ -48,6 +48,10 @@
             </DropShadow>
          </effect>
       </Button>
-      <Label fx:id="label_error" alignment="CENTER" layoutX="242.0" layoutY="320.0" prefHeight="17.0" prefWidth="167.0" text="Label" textFill="#ff1616" visible="false" AnchorPane.topAnchor="320.0" />
+      <Label fx:id="label_error" alignment="CENTER" layoutX="200.0" layoutY="320.0" prefHeight="18.0" prefWidth="250.0" text="Label" textFill="#ff4949" visible="false" AnchorPane.topAnchor="320.0">
+         <font>
+            <Font name="Ayuthaya" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

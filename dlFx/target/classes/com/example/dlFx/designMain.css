@@ -1,7 +1,15 @@
 
+.root {
+    -fx-background-radius: 10; /* Радиус закругления углов */
+    -fx-border-radius: 10;       /* Радиус закругления границы */
+    -fx-background-insets: 0, 0 1 1 0;
+    -fx-border-color: grey;
+}
+
 .close {
     -fx-background-color: transparent;
     -fx-cursor: hand;
+    -fx-background-radius: 8;
 }
 
 .close:hover {
@@ -11,18 +19,26 @@
 .minimize {
     -fx-background-color: transparent;
     -fx-cursor: hand;
+    -fx-background-radius: 8;
 }
 
 .minimize:hover {
     -fx-background-color: #90E0EF;
 }
 
+
 .top-form {
     -fx-background-color: #03045E;
+    -fx-background-radius: 10 10 0 0;
 }
 
 .left-form {
     -fx-background-color: linear-gradient(to top right, #03045E, #00B4D8);
+    -fx-background-radius: 0 0 0 10;
+}
+
+.center-form {
+    -fx-background-radius: 0 0 10 0;
 }
 
 .server-room-number {
@@ -46,7 +62,8 @@
 .bg-white {
     -fx-background-color: #fff;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0,.3), 8, 0, 0, 0);
-    -fx-background-radius: 8px;
+    /*-fx-background-radius: 8px;*/
+    -fx-background-radius: 20; /* Радиус закругления углов */
 }
 
 .bg-white:hover {
@@ -56,7 +73,8 @@
 .bg-white-2 {
     -fx-background-color: #fff;
     -fx-effect: dropshadow(three-pass-box, #9BC995, 8, 0, 0, 0);
-    -fx-background-radius: 8px;
+    /*-fx-background-radius: 8px;*/
+    -fx-background-radius: 10; /* Радиус закругления углов */
 }
 
 
@@ -110,4 +128,12 @@
 .port-btn-occupied:hover {
     -fx-background-color:  linear-gradient(to bottom right, #f80000, #fdacac);
     -fx-effect: dropshadow(one-pass-box, #f80000, 8, 0, -1, -1);
+}
+
+/* Закругленные углы у окна */
+.root {
+    -fx-background-radius: 10;   /* Радиус закругления углов */
+    -fx-border-radius: 10;       /* Радиус закругления границы */
+    -fx-background-insets: 0, 0 1 1 0;
+    -fx-border-color: grey;
 }
