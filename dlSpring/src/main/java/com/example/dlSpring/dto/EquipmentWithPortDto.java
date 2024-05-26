@@ -15,11 +15,15 @@ public class EquipmentWithPortDto {
 
     public EquipmentWithPortDto(EquipmentAtSwitch equipmentAtSwitch) {
         this.port = equipmentAtSwitch.getPort();
+        this.comment = equipmentAtSwitch.getComments();
         Equipment equipment = equipmentAtSwitch.getEquipment();
-        this.id = equipment.getId();
-        this.type = equipment.getType();
-        this.equipmentTrafficLoad = equipment.getEquipmentTrafficLoad();
-        this.equipmentPowerLoad = equipment.getEquipmentPowerLoad();
-        comment = "";
+        if (equipment != null) {
+            this.id = equipment.getId();
+            this.type = equipment.getType();
+            this.equipmentTrafficLoad = equipment.getEquipmentTrafficLoad();
+            this.equipmentPowerLoad = equipment.getEquipmentPowerLoad();
+        } else {
+            id = -1L;
+        }
     }
 }

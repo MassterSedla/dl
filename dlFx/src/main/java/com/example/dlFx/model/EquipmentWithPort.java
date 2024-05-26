@@ -7,15 +7,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EquipmentWithPort {
     private Long id;
     private int port;
     private String type;
-    private int equipmentTrafficLoad;
-    private int equipmentPowerLoad;
+    private String equipmentTrafficLoad;
+    private String equipmentPowerLoad;
     private String comment;
+
+
+    // когда этот объект не имеет информации о связи switch-equipment,
+    // а только для комментария к порту
+    // очищаем все поля, кроме коммента
+    public void clean() {
+        if (id == -1) {
+            equipmentPowerLoad = "";
+            equipmentTrafficLoad = "";
+        }
+    }
 
 }

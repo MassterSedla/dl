@@ -33,4 +33,11 @@ public class EquipmentAtSwitch {
         this.aSwitch = aSwitch;
         this.port = port;
     }
+
+    public EquipmentAtSwitch(Equipment equipment, Switch aSwitch, int port, String comments) {
+        this.equipment = equipment;
+        this.aSwitch = aSwitch;
+        this.port = port;
+        this.comments = comments;
+    }
 }

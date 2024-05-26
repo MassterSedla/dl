@@ -1,5 +1,6 @@
 package com.example.dlFx.controller;
 
+import com.example.dlFx.dto.CommentDto;
 import com.example.dlFx.dto.MainPageDto;
 import com.example.dlFx.httpRequests.HttpRequests;
 import com.example.dlFx.model.EquipmentWithPort;
@@ -94,6 +95,9 @@ public class FXMLDocumentController2 implements Initializable {
     @FXML
     private AnchorPane anchorPane_ports;
 
+    @FXML
+    private ScrollPane scrollPane_ports;
+
     private int selectedPort;
     private Long selectedSwitchId;
 
@@ -175,8 +179,8 @@ public class FXMLDocumentController2 implements Initializable {
     private void fillingInformationAboutSwitch(String url) {
         JsonNode node = HttpRequests.GetRequest(url);
         Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
-        List<Integer> portList = aSwitch.getEquipments().stream().mapToInt(EquipmentWithPort::getPort).boxed().toList();
-
+        List<Integer> portList = aSwitch.getEquipments().stream().filter(e -> e.getId() != -1)
+                .mapToInt(EquipmentWithPort::getPort).boxed().toList();
         int countPort = aSwitch.getNumberOfPort();
         Button[] buttons = new Button[countPort];
         Label[] labels = new Label[countPort];
@@ -185,9 +189,9 @@ public class FXMLDocumentController2 implements Initializable {
         for (int i = 0; i < countPort / 12; i++) {
             for (int j = 0; j < 12; j++) {
                 Button button = new Button();
-                button.setLayoutX(9.0 + j * 66);
+                button.setLayoutX(10 + j * 64);
                 button.setLayoutY(14.0 + i * 80);
-                button.setPrefWidth(65.0);
+                button.setPrefWidth(63.0);
                 button.setPrefHeight(39.0);
                 button.setMnemonicParsing(false);
                 button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
@@ -195,23 +199,23 @@ public class FXMLDocumentController2 implements Initializable {
                 if (k == 10) {
                     distance = 34;
                 }
-                label.setLayoutX(distance + j * 66);
+                label.setLayoutX(distance + j * 64);
                 label.setLayoutY(53.0 + i * 80);
                 label.setFont(new Font("Ayuthaya", 14.0));
                 label.setText(String.valueOf(k + 1));
                 ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItem3 = new MenuItem("Comment");
+                menuItem3.setOnAction(event -> makeComment(aSwitch.getId(), Integer.parseInt(label.getText()), url));
                 if (portList.contains(k + 1)) {
                     MenuItem menuItem1 = new MenuItem("Show");
                     MenuItem menuItem2 = new MenuItem("Release");
-                    MenuItem menuItem3 = new MenuItem("Comment");
                     contextMenu.getItems().addAll(menuItem1, menuItem2, menuItem3);
                     menuItem1.setOnAction(event -> selectCellByValue(Integer.parseInt(label.getText())));
                     menuItem2.setOnAction(event -> releasePort(aSwitch.getId(), Integer.parseInt(label.getText()), url));
-                    menuItem3.setOnAction(event -> selectCellByValue(Integer.parseInt(label.getText())));
                     button.getStyleClass().add("port-btn-occupied");
                 } else {
                     MenuItem menuItem4 = new MenuItem("Occupy");
-                    contextMenu.getItems().addAll(menuItem4);
+                    contextMenu.getItems().addAll(menuItem3, menuItem4);
                     menuItem4.setOnAction(event -> {
                         try {
                             selectedPort = Integer.parseInt(label.getText());
@@ -236,8 +240,15 @@ public class FXMLDocumentController2 implements Initializable {
                 k++;
             }
         }
+        scrollPane_ports.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         anchorPane_ports.getChildren().addAll(buttons);
         anchorPane_ports.getChildren().addAll(labels);
+
+        label_availablePorts.setText(aSwitch.getAvailablePorts());
+        label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
+        label_trafficLoad.setText(aSwitch.getTrafficLoad());
+        label_powerLoad.setText(aSwitch.getPowerLoad());
+        aSwitch.clean();
 
         tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
         tableColumn_port.setSortType(TableColumn.SortType.ASCENDING);
@@ -248,13 +259,10 @@ public class FXMLDocumentController2 implements Initializable {
         switchTable.getItems().addAll(aSwitch.getEquipments());
         switchTable.getSortOrder().add(tableColumn_port);
 
-        label_availablePorts.setText(aSwitch.getAvailablePorts());
-        label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
-        label_trafficLoad.setText(aSwitch.getTrafficLoad());
-        label_powerLoad.setText(aSwitch.getPowerLoad());
-
         dashboard_form_greeting.setVisible(false);
         dashboard_form_info.setVisible(true);
+
+
     }
 
     private void cleanInformationAboutSwitch() {
@@ -292,5 +300,12 @@ public class FXMLDocumentController2 implements Initializable {
                 "api/occupyPort");
         handleSelectionSwitchNumber(choiceBox_building.getValue(),
                 choiceBox_roomNumber.getValue(), choiceBox_switch.getValue());
+    }
+
+    @SneakyThrows
+    public void makeComment(Long id, int port, String url) {
+        HttpRequests.PostRequest(new CommentDto(id, port, "whdihqewuf"), "api/makeComment");
+        cleanInformationAboutSwitch();
+        fillingInformationAboutSwitch(url);
     }
 }

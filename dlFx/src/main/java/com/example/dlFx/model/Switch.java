@@ -24,21 +24,31 @@ public class Switch {
     private List<EquipmentWithPort> equipments;
 
     public String getAvailablePorts() {
-        int availablePorts = numberOfPort - equipments.size();
+        long availablePorts = numberOfPort - countAvailablePorts();
         return availablePorts + "/" + numberOfPort;
     }
 
     public String getOccupiedPorts() {
-        return equipments.size() + "/" + numberOfPort;
+        return countAvailablePorts() + "/" + numberOfPort;
     }
 
     public String getTrafficLoad() {
-        int trafficLoad = permissibleTrafficLoad - equipments.stream().flatMapToInt(e -> IntStream.of(e.getEquipmentTrafficLoad())).sum();
+        int trafficLoad = permissibleTrafficLoad - equipments.stream()
+                .flatMapToInt(e -> IntStream.of(Integer.parseInt(e.getEquipmentTrafficLoad()))).sum();
         return trafficLoad + "/" + permissibleTrafficLoad + "Mbps";
     }
 
     public String getPowerLoad() {
-        int powerLoad = permissiblePowerLoad - equipments.stream().flatMapToInt(e -> IntStream.of(e.getEquipmentPowerLoad())).sum();
+        int powerLoad = permissiblePowerLoad - equipments.stream()
+                .flatMapToInt(e -> IntStream.of(Integer.parseInt(e.getEquipmentPowerLoad()))).sum();
         return powerLoad + "/" + permissiblePowerLoad + "w";
+    }
+
+    private long countAvailablePorts() {
+        return equipments.stream().filter(e -> e.getId() != -1).count();
+    }
+
+    public void clean() {
+        equipments.forEach(EquipmentWithPort::clean);
     }
 }

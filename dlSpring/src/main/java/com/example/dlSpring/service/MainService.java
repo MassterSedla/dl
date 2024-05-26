@@ -1,14 +1,16 @@
 package com.example.dlSpring.service;
 
+import com.example.dlSpring.dto.CommentDto;
 import com.example.dlSpring.dto.MainPageDto;
 import com.example.dlSpring.dto.SwitchDto;
+import com.example.dlSpring.model.Equipment;
 import com.example.dlSpring.model.EquipmentAtSwitch;
+import com.example.dlSpring.model.Switch;
 import com.example.dlSpring.repository.EquipmentAtSwitchRepository;
 import com.example.dlSpring.repository.EquipmentRepository;
 import com.example.dlSpring.repository.SwitchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -38,7 +40,7 @@ public class MainService {
 
     //@Transactional
     public void deleteEquipment(Long switchId, int port) {
-        equipmentAtSwitchRepository.deleteBySwitchIdAndPort(switchId, port);
+        equipmentAtSwitchRepository.deleteByaSwitch_IdAndPort(switchId, port);
     }
 
     public Set<String> listOfType() {
@@ -55,12 +57,35 @@ public class MainService {
 
     public void occupyPort(MainPageDto mainPageDto) {
         List<String> list = mainPageDto.getList();
-        equipmentAtSwitchRepository.save(
-                new EquipmentAtSwitch(
-                        equipmentRepository.findById(Long.valueOf(list.get(0))).get(),
-                        switchRepository.findById(Long.valueOf(list.get(1))).get(),
-                        Integer.parseInt(list.get(2))
-                )
-        );
+        Switch aSwitch = switchRepository.findById(Long.valueOf(list.get(1))).get();
+        Equipment equipment = equipmentRepository.findById(Long.valueOf(list.get(0))).get();
+        int port = Integer.parseInt(list.get(2));
+        EquipmentAtSwitch equipmentAtSwitch = equipmentAtSwitchRepository
+                .findByaSwitch_IdAndPort(aSwitch.getId(), port);
+        if (equipmentAtSwitch != null) {
+            equipmentAtSwitch.setComments("");
+            equipmentAtSwitch.setEquipment(equipment);
+            equipmentAtSwitchRepository.save(equipmentAtSwitch);
+        } else {
+            equipmentAtSwitchRepository.save(new EquipmentAtSwitch(equipment, aSwitch, port));
+        }
+
+    }
+
+    public void makeComment(CommentDto commentDto) {
+        EquipmentAtSwitch equipmentAtSwitch = equipmentAtSwitchRepository
+                .findByaSwitch_IdAndPort(commentDto.getSwitch_id(), commentDto.getPort());
+        if (equipmentAtSwitch != null) {
+            equipmentAtSwitch.setComments(commentDto.getComment());
+            equipmentAtSwitchRepository.save(equipmentAtSwitch);
+        } else {
+            equipmentAtSwitchRepository.save(
+                    new EquipmentAtSwitch(
+                            null,
+                            switchRepository.findById(commentDto.getSwitch_id()).get(),
+                            commentDto.getPort(),
+                            commentDto.getComment())
+            );
+        }
     }
 }

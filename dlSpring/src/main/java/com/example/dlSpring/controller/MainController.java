@@ -1,5 +1,6 @@
 package com.example.dlSpring.controller;
 
+import com.example.dlSpring.dto.CommentDto;
 import com.example.dlSpring.dto.MainPageDto;
 import com.example.dlSpring.dto.SwitchDto;
 import com.example.dlSpring.service.MainService;
@@ -75,7 +76,13 @@ public class MainController {
         mainService.occupyPort(mainPageDto);
     }
 
+    @PostMapping("/makeComment")
+    public void makeComment(@RequestBody CommentDto commentDto) {
+        mainService.makeComment(commentDto);
+    }
+
     private String redactUrl(String url) {
         return url.replaceAll("_", " ");
     }
+
 }
