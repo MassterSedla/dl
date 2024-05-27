@@ -25,33 +25,11 @@ public class Switch {
     private String room;
     private int permissibleTrafficLoad;
     private int permissiblePowerLoad;
+    private String ip;
     private int numberOfPort;
     @OneToMany(mappedBy = "aSwitch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<EquipmentAtSwitch> equipmentAtSwitches;
-
-    public Switch(int number, String type, String building, String room, int permissibleTrafficLoad,
-                  int permissiblePowerLoad, int numberOfPort, List<EquipmentAtSwitch> equipmentAtSwitches) {
-        this.number = number;
-        this.type = type;
-        this.building = building;
-        this.room = room;
-        this.permissibleTrafficLoad = permissibleTrafficLoad;
-        this.permissiblePowerLoad = permissiblePowerLoad;
-        this.numberOfPort = numberOfPort;
-        this.equipmentAtSwitches = equipmentAtSwitches;
-    }
-
-    public Switch(int number, String type, String building, String room,
-                  int permissibleTrafficLoad, int permissiblePowerLoad, int numberOfPort) {
-        this.number = number;
-        this.type = type;
-        this.building = building;
-        this.room = room;
-        this.permissibleTrafficLoad = permissibleTrafficLoad;
-        this.permissiblePowerLoad = permissiblePowerLoad;
-        this.numberOfPort = numberOfPort;
-    }
 
     @Override
     public String toString() {
@@ -63,6 +41,7 @@ public class Switch {
                 ", room='" + room + '\'' +
                 ", permissibleTrafficLoad=" + permissibleTrafficLoad +
                 ", permissiblePowerLoad=" + permissiblePowerLoad +
+                ", ip='" + ip + '\'' +
                 ", numberOfPort=" + numberOfPort +
                 '}';
     }

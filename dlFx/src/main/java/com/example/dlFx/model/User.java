@@ -17,6 +17,9 @@ public class User {
     private String firstname;
     private String surname;
     private String email;
-    private String password;
     private Set<Role> roles;
+
+    public String getName() {
+        return surname + " " + firstname;
+    }
 }

@@ -14,10 +14,13 @@ public class EquipmentWithPort {
     private Long id;
     private int port;
     private String type;
+    private String company;
+    private String model;
     private String equipmentTrafficLoad;
     private String equipmentPowerLoad;
+    private String equipmentIp;
+    private String equipmentMac;
     private String comment;
-
 
     // когда этот объект не имеет информации о связи switch-equipment,
     // а только для комментария к порту

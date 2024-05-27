@@ -41,11 +41,16 @@
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane fx:id="choiceBox_selectTheSwitch" prefHeight="660.0" prefWidth="200.0" styleClass="left-form" stylesheets="@designMain.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="660.0" prefWidth="200.0" styleClass="left-form" stylesheets="@designMain.css" BorderPane.alignment="CENTER">
                <children>
                   <FontAwesomeIconView fill="#90e0ef" glyphName="USER" layoutX="76.0" layoutY="72.0" size="60" />
                   <Label layoutX="75.0" layoutY="82.0" text="Engineer" textFill="WHITE" />
-                  <Label layoutX="58.0" layoutY="99.0" text="Ivanov Ivan" textFill="WHITE">
+                  <Label fx:id="label_username" layoutX="58.0" layoutY="99.0" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="label_email" layoutX="58.0" layoutY="119.0" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -101,7 +106,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="dashboard_form_info" layoutX="-1.0" prefHeight="660.0" prefWidth="865.0" visible="false">
+                  <AnchorPane fx:id="dashboard_form_info" layoutX="-1.0" prefHeight="660.0" prefWidth="865.0">
                      <children>
                         <AnchorPane maxWidth="820.0" prefHeight="265.0" prefWidth="820.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="18.0" AnchorPane.topAnchor="370.0">
                            <children>
@@ -129,7 +134,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="170.0" prefWidth="820.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="18.0" AnchorPane.topAnchor="180.0">
                            <children>
-                              <ScrollPane fx:id="scrollPane_ports"  layoutY="10.0" maxWidth="820.0" prefHeight="170.0" prefWidth="820.0" style="-fx-background-radius: 20; -fx-background-color: #fff;">
+                              <ScrollPane fx:id="scrollPane_ports" layoutY="10.0" maxWidth="820.0" prefHeight="170.0" prefWidth="820.0" style="-fx-background-radius: 20; -fx-background-color: #fff;">
                                  <content>
                                     <AnchorPane fx:id="anchorPane_ports" maxHeight="800.0" minWidth="0.0" prefHeight="170.0" prefWidth="790.0" style="-fx-background-radius: 20; -fx-background-color: #fff;" />
                                  </content>
@@ -193,9 +198,61 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
+                        <DialogPane fx:id="dialogPane_occupyPort" headerText="Update Switch" layoutX="18.0" layoutY="161.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #0a0000" visible="false">
+                           <content>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0">
+                                 <children>
+                                    <Label layoutX="50.0" layoutY="25.0" text="Укажите тип устройства:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBox_equipmentType" layoutX="50.0" layoutY="48.0" prefHeight="20.0" prefWidth="250.0" />
+                                    <Label layoutX="50.0" layoutY="75.0" text="Укажите производителя:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBox_equipmentCompany" layoutX="50.0" layoutY="98.0" prefHeight="20.0" prefWidth="250.0" />
+                                    <Label layoutX="50.0" layoutY="125.0" text="Выберите модель:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBox_equipmentModel" layoutX="50.0" layoutY="148.0" prefHeight="20.0" prefWidth="250.0" />
+                                    <Label layoutX="350.0" layoutY="75.0" text="ip:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="ip" layoutX="370.0" layoutY="75.0" />
+                                    <Label fx:id="label_ipError" layoutX="365.0" layoutY="57.0" style="-fx-text-fill: red" text="192.168.XX.XX or 10.0.XX.XX" visible="false">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="334.0" layoutY="125.0" text="mac:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="mac" layoutX="370.0" layoutY="125.0" />
+                                    <Label fx:id="label_macError" layoutX="350.0" layoutY="107.0" style="-fx-text-fill: red" text="(a-f,0-9) format: 1b:ff:c1:29:2a:44" visible="false">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="button_apply" layoutX="425.0" layoutY="210.0" prefHeight="20.0" prefWidth="80.0" text="Apply" disable="true"/>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                           <buttonTypes>
+                              <ButtonType fx:constant="CANCEL" />
+                           </buttonTypes>
+                        </DialogPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="dashboard_form_greeting" prefHeight="660.0" prefWidth="865.0" style="-fx-background-color: #ffffff;" styleClass="center-form" stylesheets="@designMain.css">
+                  <AnchorPane fx:id="dashboard_form_greeting" prefHeight="660.0" prefWidth="865.0" style="-fx-background-color: #ffffff;" styleClass="center-form" stylesheets="@designMain.css" visible="false">
                      <children>
                         <AnchorPane layoutX="143.0" layoutY="57.0" prefHeight="75.0" prefWidth="580.0" styleClass="bg-white-2" stylesheets="@designMain.css" AnchorPane.topAnchor="55.0">
                            <children>

@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="dashboard_form" prefHeight="700.0" prefWidth="1050.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController2">
+<AnchorPane fx:id="dashboard_form" prefHeight="700.0" prefWidth="1050.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dlFx.controller.FXMLDocumentController2">
    <children>
       <BorderPane prefHeight="700.0" prefWidth="1050.0" styleClass="root" stylesheets="@designMain.css">
          <top>
@@ -49,11 +41,16 @@
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane fx:id="choiceBox_selectTheSwitch" prefHeight="660.0" prefWidth="200.0" styleClass="left-form" stylesheets="@designMain.css" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="660.0" prefWidth="200.0" styleClass="left-form" stylesheets="@designMain.css" BorderPane.alignment="CENTER">
                <children>
                   <FontAwesomeIconView fill="#90e0ef" glyphName="USER" layoutX="76.0" layoutY="72.0" size="60" />
                   <Label layoutX="75.0" layoutY="82.0" text="Engineer" textFill="WHITE" />
-                  <Label layoutX="58.0" layoutY="99.0" text="Ivanov Ivan" textFill="WHITE">
+                  <Label fx:id="label_username" layoutX="58.0" layoutY="99.0" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="label_email" layoutX="58.0" layoutY="119.0" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -109,9 +106,9 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="dashboard_form_info" layoutX="-1.0" prefHeight="660.0" prefWidth="865.0" visible="false">
+                  <AnchorPane fx:id="dashboard_form_info" layoutX="-1.0" prefHeight="660.0" prefWidth="865.0">
                      <children>
-                        <AnchorPane maxWidth="810.0" prefHeight="265.0" prefWidth="810.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="370.0">
+                        <AnchorPane maxWidth="820.0" prefHeight="265.0" prefWidth="820.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="18.0" AnchorPane.topAnchor="370.0">
                            <children>
                               <ScrollPane layoutX="5.0" layoutY="8.0" maxWidth="800.0" prefHeight="240.0" prefWidth="800.0" stylesheets="@designMain.css">
                                  <content>
@@ -135,252 +132,16 @@
                               </ScrollPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="anchorPane_ports" prefHeight="170.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="180.0">
+                        <AnchorPane prefHeight="170.0" prefWidth="820.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="18.0" AnchorPane.topAnchor="180.0">
                            <children>
-                              <!--                              <Label layoutX="44.0" layoutY="53.0" text="1">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="108.0" layoutY="53.0" text="2">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="172.0" layoutY="53.0" text="3">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="237.0" layoutY="53.0" text="4">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="302.0" layoutY="53.0" text="5">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="367.0" layoutY="53.0" text="6">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="432.0" layoutY="53.0" text="7">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="497.0" layoutY="53.0" text="8">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="562.0" layoutY="53.0" text="9">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="623.0" layoutY="53.0" text="10">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="688.0" layoutY="53.0" text="11">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="753.0" layoutY="53.0" text="12">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="40.0" layoutY="139.0" text="13">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="623.0" layoutY="139.0" text="22">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="558.0" layoutY="139.0" text="21">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="493.0" layoutY="139.0" text="20">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="428.0" layoutY="139.0" text="19">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="363.0" layoutY="139.0" text="18">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="298.0" layoutY="139.0" text="17">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="233.0" layoutY="139.0" text="16">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="168.0" layoutY="139.0" text="15">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="104.0" layoutY="139.0" text="14">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="688.0" layoutY="139.0" text="23">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Label layoutX="753.0" layoutY="139.0" text="24">-->
-                              <!--                                 <font>-->
-                              <!--                                    <Font name="Ayuthaya" size="14.0" />-->
-                              <!--                                 </font>-->
-                              <!--                              </Label>-->
-                              <!--                              <Button fx:id="btn_port1" layoutX="15.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port2" layoutX="80.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port3" layoutX="145.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port4" layoutX="210.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port5" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port6" layoutX="340.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port7" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port8" layoutX="470.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port9" layoutX="535.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port10" layoutX="600.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port11" layoutX="665.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port12" layoutX="730.0" layoutY="14.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-
-                              <!--                              <Button fx:id="btn_port13" layoutX="15.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port14" layoutX="80.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port15" layoutX="145.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port16" layoutX="210.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port17" layoutX="275.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port18" layoutX="340.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port19" layoutX="405.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port20" layoutX="470.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port21" layoutX="535.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port22" layoutX="600.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port23" layoutX="665.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
-                              <!--                              <Button fx:id="btn_port24" layoutX="730.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0">-->
-                              <!--                                 <graphic>-->
-                              <!--                                    <FontAwesomeIconView glyphName="FORT_AWESOME" size="30" />-->
-                              <!--                                 </graphic>-->
-                              <!--                              </Button>-->
+                              <ScrollPane fx:id="scrollPane_ports" layoutY="10.0" maxWidth="820.0" prefHeight="170.0" prefWidth="820.0" style="-fx-background-radius: 20; -fx-background-color: #fff;">
+                                 <content>
+                                    <AnchorPane fx:id="anchorPane_ports" maxHeight="800.0" minWidth="0.0" prefHeight="170.0" prefWidth="790.0" style="-fx-background-radius: 20; -fx-background-color: #fff;" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="28.0" layoutY="28.0" prefHeight="140.0" prefWidth="810.0" styleClass="bg-white" stylesheets="@designMain.css" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="20.0">
+                        <AnchorPane layoutX="18.0" layoutY="28.0" prefHeight="140.0" prefWidth="820.0" styleClass="bg-white" stylesheets="@designMain.css">
                            <children>
                               <Label layoutX="370.0" layoutY="8.0" text="Switch">
                                  <font>
@@ -437,9 +198,61 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
+                        <DialogPane fx:id="dialogPane_occupyPort" headerText="Update Switch" layoutX="18.0" layoutY="161.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #0a0000" visible="false">
+                           <content>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0">
+                                 <children>
+                                    <Label layoutX="50.0" layoutY="25.0" text="Укажите тип устройства:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBox_equipmentType" layoutX="50.0" layoutY="48.0" prefHeight="20.0" prefWidth="250.0" />
+                                    <Label layoutX="50.0" layoutY="75.0" text="Укажите производителя:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBox_equipmentCompany" layoutX="50.0" layoutY="98.0" prefHeight="20.0" prefWidth="250.0" />
+                                    <Label layoutX="50.0" layoutY="125.0" text="Выберите модель:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBox_equipmentModel" layoutX="50.0" layoutY="148.0" prefHeight="20.0" prefWidth="250.0" />
+                                    <Label layoutX="350.0" layoutY="75.0" text="ip:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="ip" layoutX="370.0" layoutY="75.0" />
+                                    <Label fx:id="label_ipError" layoutX="365.0" layoutY="57.0" style="-fx-text-fill: red" text="192.168.XX.XX or 10.0.XX.XX" visible="false">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="334.0" layoutY="125.0" text="mac:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="mac" layoutX="370.0" layoutY="125.0" />
+                                    <Label fx:id="label_macError" layoutX="350.0" layoutY="107.0" style="-fx-text-fill: red" text="(a-f,0-9) format: 1b:ff:c1:29:2a:44" visible="false">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="button_apply" layoutX="425.0" layoutY="210.0" prefHeight="20.0" prefWidth="80.0" text="Apply" disable="true"/>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                           <buttonTypes>
+                              <ButtonType fx:constant="CANCEL" />
+                           </buttonTypes>
+                        </DialogPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="dashboard_form_greeting" prefHeight="660.0" prefWidth="865.0" style="-fx-background-color: #ffffff;" styleClass="center-form" stylesheets="@designMain.css">
+                  <AnchorPane fx:id="dashboard_form_greeting" prefHeight="660.0" prefWidth="865.0" style="-fx-background-color: #ffffff;" styleClass="center-form" stylesheets="@designMain.css" visible="false">
                      <children>
                         <AnchorPane layoutX="143.0" layoutY="57.0" prefHeight="75.0" prefWidth="580.0" styleClass="bg-white-2" stylesheets="@designMain.css" AnchorPane.topAnchor="55.0">
                            <children>

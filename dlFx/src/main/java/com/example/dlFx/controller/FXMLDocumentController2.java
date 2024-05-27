@@ -1,37 +1,69 @@
 package com.example.dlFx.controller;
 
 import com.example.dlFx.dto.CommentDto;
+import com.example.dlFx.dto.EquipmentDto;
 import com.example.dlFx.dto.MainPageDto;
 import com.example.dlFx.httpRequests.HttpRequests;
 import com.example.dlFx.model.EquipmentWithPort;
 import com.example.dlFx.model.Switch;
+import com.example.dlFx.model.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FORT_AWESOME;
 
 public class FXMLDocumentController2 implements Initializable {
+    @FXML
+    public Label label_ipError;
+
+    @FXML
+    public Label label_macError;
+
+    @FXML
+    private DialogPane dialogPane_occupyPort;
+
+    @FXML
+    private ChoiceBox<String> choiceBox_equipmentType;
+
+    @FXML
+    private ChoiceBox<String> choiceBox_equipmentCompany;
+
+    @FXML
+    private ChoiceBox<String> choiceBox_equipmentModel;
+
+    @FXML
+    private Button button_apply;
+
+    @FXML
+    private TextField mac;
+
+    @FXML
+    private TextField ip;
+
+    @FXML
+    private Label label_username;
+
+    @FXML
+    private Label label_email;
+
     @FXML
     private Label label_occupiedPorts;
 
@@ -100,7 +132,7 @@ public class FXMLDocumentController2 implements Initializable {
 
     private int selectedPort;
     private Long selectedSwitchId;
-
+    private boolean[] flagToApply;
     private FXMLLoader fxmlLoader;
 
     // Закрыть окно
@@ -115,29 +147,23 @@ public class FXMLDocumentController2 implements Initializable {
     }
 
     // Назад на страницу авторизации
-    @FXML
-    private void switchToFXMLDocument() {
+//    @FXML
+//    private void switchToFXMLDocument() {
+//
+//        dashboard_logOut_btn.getScene().getWindow().hide();
+//        //FxApplication fxApplication = new FxApplication();
+//        //fxApplication.showFXMLDocument();
+//    }
 
-        dashboard_logOut_btn.getScene().getWindow().hide();
-        //FxApplication fxApplication = new FxApplication();
-        //fxApplication.showFXMLDocument();
-    }
 
-    @FXML
-    public void openDialogPage() throws IOException {
-        fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/example/dlFx/DialogPane.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.setScene(scene);
-        dialogStage.show();
-    }
 
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        JsonNode userNode = HttpRequests.GetRequest("user/info");
+        User user = new ObjectMapper().treeToValue(userNode, User.class);
+        label_username.setText(user.getName());
+        label_email.setText(user.getEmail());
         JsonNode node = HttpRequests.GetRequest("api/page");
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         choiceBox_building.getItems().setAll(mainPageDto.getList());
@@ -145,6 +171,32 @@ public class FXMLDocumentController2 implements Initializable {
         choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(choiceBox_building.getValue(), newVal));
         choiceBox_switch.valueProperty().addListener((obs, oldVal, switchNumber) ->
                 handleSelectionSwitchNumber(choiceBox_building.getValue(), choiceBox_roomNumber.getValue(), switchNumber));
+        flagToApply = new boolean[3];
+        setPatterns();
+    }
+
+    private void setPatterns() {
+        Pattern pattern = Pattern.compile("(192\\.168|10\\.0)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            flagToApply[0] = pattern.matcher(newText).matches();
+            checkApplyFlag();
+            return change;
+        });
+        ip.setTextFormatter(formatter);
+
+        Pattern pattern2 = Pattern.compile("([0-9a-f]{2}:){5}([0-9a-f]{2})");
+        formatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            flagToApply[1] = pattern2.matcher(newText).matches();
+            checkApplyFlag();
+            return change;
+        });
+        mac.setTextFormatter(formatter);
+    }
+
+    private void checkApplyFlag() {
+        button_apply.setDisable(!(flagToApply[0] && flagToApply[1] && flagToApply[2]));
     }
 
     @SneakyThrows
@@ -217,13 +269,9 @@ public class FXMLDocumentController2 implements Initializable {
                     MenuItem menuItem4 = new MenuItem("Occupy");
                     contextMenu.getItems().addAll(menuItem3, menuItem4);
                     menuItem4.setOnAction(event -> {
-                        try {
-                            selectedPort = Integer.parseInt(label.getText());
-                            selectedSwitchId = aSwitch.getId();
-                            openDialogPage();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        selectedPort = Integer.parseInt(label.getText());
+                        selectedSwitchId = aSwitch.getId();
+                        openDialogPageOccupyPort();
                     });
                     button.getStyleClass().add("port-btn-available");
                 }
@@ -293,19 +341,72 @@ public class FXMLDocumentController2 implements Initializable {
         fillingInformationAboutSwitch(url);
     }
 
-    public void getFunctionHandleSelectionSwitchNumber(int equipmentId) throws IOException, URISyntaxException, InterruptedException {
-        HttpRequests.PostRequest(
-                new MainPageDto(List.of(String.valueOf(equipmentId),
-                        String.valueOf(selectedSwitchId), String.valueOf(selectedPort))),
-                "api/occupyPort");
-        handleSelectionSwitchNumber(choiceBox_building.getValue(),
-                choiceBox_roomNumber.getValue(), choiceBox_switch.getValue());
-    }
+
 
     @SneakyThrows
     public void makeComment(Long id, int port, String url) {
         HttpRequests.PostRequest(new CommentDto(id, port, "whdihqewuf"), "api/makeComment");
         cleanInformationAboutSwitch();
         fillingInformationAboutSwitch(url);
+    }
+
+    @SneakyThrows
+    @FXML
+    public void openDialogPageOccupyPort() {
+        dialogPane_occupyPort.setVisible(true);
+        JsonNode node = HttpRequests.GetRequest("api/dialogPage");
+        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+        choiceBox_equipmentType.getItems().setAll(mainPageDto.getList());
+        choiceBox_equipmentType.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionType(newVal));
+        choiceBox_equipmentCompany.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionCompany(newVal));
+        choiceBox_equipmentModel.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionModel(newVal));
+    }
+
+    @SneakyThrows
+    private void handleSelectionType(String newVal) {
+        choiceBox_equipmentCompany.getItems().clear();
+        if (newVal != null) {
+            JsonNode node = HttpRequests.GetRequest("api/dialogPage/" + newVal);
+            MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+            choiceBox_equipmentCompany.getItems().setAll(mainPageDto.getList());
+        }
+    }
+
+    @SneakyThrows
+    private void handleSelectionCompany(String newVal) {
+        choiceBox_equipmentModel.getItems().clear();
+        flagToApply[2] = false;
+        if (newVal != null) {
+            JsonNode node = HttpRequests.GetRequest("api/dialogPage/" + choiceBox_equipmentType.getValue() + "/" + newVal);
+            MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+            choiceBox_equipmentModel.getItems().setAll(mainPageDto.getList());
+        }
+    }
+
+    private void handleSelectionModel(String newVal) {
+        if (newVal != null) {
+            flagToApply[2] = true;
+            checkApplyFlag();
+            button_apply.setOnAction(event -> {
+                try {
+                    applyAction(newVal);
+                } catch (IOException | URISyntaxException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+        }
+    }
+
+    private void applyAction(String newVal) throws IOException, URISyntaxException, InterruptedException {
+        HttpRequests.PostRequest(
+                new EquipmentDto(selectedSwitchId, selectedPort, ip.getText(), mac.getText()),
+                "api/occupyPort/" + choiceBox_equipmentType.getValue() +
+                        "/" + choiceBox_equipmentCompany.getValue() + "/" + newVal);
+        dialogPane_occupyPort.setVisible(false);
+        ip.clear();
+        mac.clear();
+        handleSelectionSwitchNumber(choiceBox_building.getValue(),
+                choiceBox_roomNumber.getValue(), choiceBox_switch.getValue());
     }
 }

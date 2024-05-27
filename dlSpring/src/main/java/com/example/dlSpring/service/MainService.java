@@ -1,6 +1,7 @@
 package com.example.dlSpring.service;
 
 import com.example.dlSpring.dto.CommentDto;
+import com.example.dlSpring.dto.EquipmentDto;
 import com.example.dlSpring.dto.MainPageDto;
 import com.example.dlSpring.dto.SwitchDto;
 import com.example.dlSpring.model.Equipment;
@@ -38,8 +39,7 @@ public class MainService {
         return new SwitchDto(switchRepository.findByBuildingAndRoomAndNumber(building, room, number));
     }
 
-    //@Transactional
-    public void deleteEquipment(Long switchId, int port) {
+    public void deleteFromSwitch(Long switchId, int port) {
         equipmentAtSwitchRepository.deleteByaSwitch_IdAndPort(switchId, port);
     }
 
@@ -47,27 +47,32 @@ public class MainService {
         return equipmentRepository.findAllType();
     }
 
-    public Set<String> listOfModel(String type) {
-        return equipmentRepository.findAllModelByType(type);
+    public Set<String> listOfCompany(String type) {
+        return equipmentRepository.findAllCompanyByType(type);
     }
 
-    public Integer getEquipmentIdByTypeAndModel(String type, String model) {
-        return equipmentRepository.findEquipmentIdByTypeAndModel(type, model);
+    public Set<String> listOfModel(String type, String company) {
+        return equipmentRepository.findAllModelByTypeAndCompany(type, company);
     }
 
-    public void occupyPort(MainPageDto mainPageDto) {
-        List<String> list = mainPageDto.getList();
-        Switch aSwitch = switchRepository.findById(Long.valueOf(list.get(1))).get();
-        Equipment equipment = equipmentRepository.findById(Long.valueOf(list.get(0))).get();
-        int port = Integer.parseInt(list.get(2));
+    public Long getEquipmentId(String type, String company, String model) {
+        return equipmentRepository.findEquipmentIdByTypeAndCompanyAndModel(type, company, model);
+    }
+
+    public void occupyPort(EquipmentDto equipmentDto) {
+        Equipment equipment = equipmentRepository.findById(equipmentDto.getId()).get();
         EquipmentAtSwitch equipmentAtSwitch = equipmentAtSwitchRepository
-                .findByaSwitch_IdAndPort(aSwitch.getId(), port);
+                .findByaSwitch_IdAndPort(equipmentDto.getSwitchId(), equipmentDto.getPort());
         if (equipmentAtSwitch != null) {
             equipmentAtSwitch.setComments("");
+            equipmentAtSwitch.setEquipmentMac(equipmentDto.getEquipmentMac());
+            equipmentAtSwitch.setEquipmentIp(equipmentDto.getEquipmentIp());
             equipmentAtSwitch.setEquipment(equipment);
             equipmentAtSwitchRepository.save(equipmentAtSwitch);
         } else {
-            equipmentAtSwitchRepository.save(new EquipmentAtSwitch(equipment, aSwitch, port));
+            equipmentAtSwitchRepository.save(new EquipmentAtSwitch(equipment,
+                    switchRepository.findById(equipmentDto.getSwitchId()).get(),
+                    equipmentDto.getPort(), equipmentDto.getEquipmentIp(), equipmentDto.getEquipmentMac()));
         }
 
     }
@@ -84,6 +89,8 @@ public class MainService {
                             null,
                             switchRepository.findById(commentDto.getSwitch_id()).get(),
                             commentDto.getPort(),
+                            "",
+                            "",
                             commentDto.getComment())
             );
         }

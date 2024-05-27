@@ -20,27 +20,13 @@ public class Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+    private String company;
     private String model;
     private int equipmentTrafficLoad;
     private int equipmentPowerLoad;
     @OneToMany(mappedBy = "equipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<EquipmentAtSwitch> equipmentAtSwitch;
-
-    public Equipment(String type, String model, int equipmentTrafficLoad, int equipmentPowerLoad) {
-        this.type = type;
-        this.model = model;
-        this.equipmentTrafficLoad = equipmentTrafficLoad;
-        this.equipmentPowerLoad = equipmentPowerLoad;
-    }
-
-    public Equipment(String type, String model, int equipmentTrafficLoad, int equipmentPowerLoad, List<EquipmentAtSwitch> equipmentAtSwitch) {
-        this.type = type;
-        this.model = model;
-        this.equipmentTrafficLoad = equipmentTrafficLoad;
-        this.equipmentPowerLoad = equipmentPowerLoad;
-        this.equipmentAtSwitch = equipmentAtSwitch;
-    }
 
     @Override
     public String toString() {

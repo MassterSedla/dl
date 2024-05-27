@@ -26,18 +26,24 @@ public class EquipmentAtSwitch {
     @JsonBackReference
     private Switch aSwitch;
     private int port;
+    private String equipmentIp;
+    private String equipmentMac;
     private String comments;
 
-    public EquipmentAtSwitch(Equipment equipment, Switch aSwitch, int port) {
+    public EquipmentAtSwitch(Equipment equipment, Switch aSwitch, int port, String equipmentIp, String equipmentMac, String comments) {
         this.equipment = equipment;
         this.aSwitch = aSwitch;
         this.port = port;
+        this.equipmentIp = equipmentIp;
+        this.equipmentMac = equipmentMac;
+        this.comments = comments;
     }
 
-    public EquipmentAtSwitch(Equipment equipment, Switch aSwitch, int port, String comments) {
+    public EquipmentAtSwitch(Equipment equipment, Switch aSwitch, int port, String equipmentIp, String equipmentMac) {
         this.equipment = equipment;
         this.aSwitch = aSwitch;
         this.port = port;
-        this.comments = comments;
+        this.equipmentIp = equipmentIp;
+        this.equipmentMac = equipmentMac;
     }
 }

@@ -20,6 +20,7 @@ public class Switch {
     private String room;
     private int permissibleTrafficLoad;
     private int permissiblePowerLoad;
+    private String ip;
     private int numberOfPort;
     private List<EquipmentWithPort> equipments;
 

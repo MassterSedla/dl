@@ -1,6 +1,7 @@
 package com.example.dlSpring.controller;
 
 import com.example.dlSpring.dto.CommentDto;
+import com.example.dlSpring.dto.EquipmentDto;
 import com.example.dlSpring.dto.MainPageDto;
 import com.example.dlSpring.dto.SwitchDto;
 import com.example.dlSpring.service.MainService;
@@ -46,8 +47,8 @@ public class MainController {
     }
 
     @DeleteMapping("/page/{switchId}/{port}")
-    public void deleteEquipment(@PathVariable Long switchId, @PathVariable int port) {
-        mainService.deleteEquipment(switchId, port);
+    public void deleteFromSwitch(@PathVariable Long switchId, @PathVariable int port) {
+        mainService.deleteFromSwitch(switchId, port);
     }
 
     @GetMapping("/dialogPage")
@@ -58,28 +59,33 @@ public class MainController {
     }
 
     @GetMapping("/dialogPage/{type}")
-    public ResponseEntity<MainPageDto> getAllEquipmentByType(@PathVariable String type) {
+    public ResponseEntity<MainPageDto> getAllEquipmentCompanyByType(@PathVariable String type) {
         return new ResponseEntity<>(new MainPageDto(
-                new ArrayList<>(mainService.listOfModel(redactUrl(type)))
+                new ArrayList<>(mainService.listOfCompany(redactUrl(type)))
         ), HttpStatus.OK);
     }
 
-    @GetMapping("/dialogPage/{type}/{model}")
-    public ResponseEntity<MainPageDto> getEquipmentId(@PathVariable String type, @PathVariable String model) {
-        return new ResponseEntity<>(new MainPageDto(List.of(String.valueOf(
-                mainService.getEquipmentIdByTypeAndModel(redactUrl(type), redactUrl(model)))
-        )), HttpStatus.OK);
+    @GetMapping("/dialogPage/{type}/{company}")
+    public ResponseEntity<MainPageDto> getAllEquipmentModelByTypeAndCompany(@PathVariable String type,
+                                                                            @PathVariable String company) {
+        return new ResponseEntity<>(new MainPageDto(
+                new ArrayList<>(mainService.listOfModel(redactUrl(type), redactUrl(company)))
+        ), HttpStatus.OK);
     }
 
-    @PostMapping("/occupyPort")
-    public void occupyPort(@RequestBody MainPageDto mainPageDto) {
-        mainService.occupyPort(mainPageDto);
+    @PostMapping("/occupyPort/{type}/{company}/{model}")
+    public void  getEquipmentId(@PathVariable String type, @PathVariable String company,
+                                @PathVariable String model, @RequestBody EquipmentDto equipmentDto) {
+        equipmentDto.setId(mainService.getEquipmentId(redactUrl(type), redactUrl(company), redactUrl(model)));
+        mainService.occupyPort(equipmentDto);
     }
 
     @PostMapping("/makeComment")
     public void makeComment(@RequestBody CommentDto commentDto) {
         mainService.makeComment(commentDto);
     }
+
+
 
     private String redactUrl(String url) {
         return url.replaceAll("_", " ");
