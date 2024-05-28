@@ -38,7 +38,13 @@ public class FXMLDocumentController2 implements Initializable {
     public Label label_macError;
 
     @FXML
-    private DialogPane dialogPane_occupyPort;
+    public AnchorPane anchorPane_comment;
+
+    @FXML
+    public AnchorPane anchorPane_occupyPort;
+
+    @FXML
+    private DialogPane dialogPane;
 
     @FXML
     private ChoiceBox<String> choiceBox_equipmentType;
@@ -51,6 +57,21 @@ public class FXMLDocumentController2 implements Initializable {
 
     @FXML
     private Button button_apply;
+
+    @FXML
+    private Button button_cancel;
+
+    @FXML
+    private Button button_apply2;
+
+    @FXML
+    private Button button_cancel2;
+
+    @FXML
+    private Button button_delete;
+
+    @FXML
+    private TextArea text_comment;
 
     @FXML
     private TextField mac;
@@ -180,6 +201,7 @@ public class FXMLDocumentController2 implements Initializable {
         TextFormatter<String> formatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             flagToApply[0] = pattern.matcher(newText).matches();
+            label_ipError.setVisible(!flagToApply[0]);
             checkApplyFlag();
             return change;
         });
@@ -189,6 +211,7 @@ public class FXMLDocumentController2 implements Initializable {
         formatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             flagToApply[1] = pattern2.matcher(newText).matches();
+            label_macError.setVisible(!flagToApply[1]);
             checkApplyFlag();
             return change;
         });
@@ -257,7 +280,7 @@ public class FXMLDocumentController2 implements Initializable {
                 label.setText(String.valueOf(k + 1));
                 ContextMenu contextMenu = new ContextMenu();
                 MenuItem menuItem3 = new MenuItem("Comment");
-                menuItem3.setOnAction(event -> makeComment(aSwitch.getId(), Integer.parseInt(label.getText()), url));
+                menuItem3.setOnAction(event -> openDialogPageComment(aSwitch.getId(), Integer.parseInt(label.getText()), url));
                 if (portList.contains(k + 1)) {
                     MenuItem menuItem1 = new MenuItem("Show");
                     MenuItem menuItem2 = new MenuItem("Release");
@@ -341,21 +364,59 @@ public class FXMLDocumentController2 implements Initializable {
         fillingInformationAboutSwitch(url);
     }
 
+    @SneakyThrows
+    public void openDialogPageComment(Long id, int port, String url) {
+        dialogPane.setVisible(true);
+        anchorPane_comment.setVisible(true);
+        JsonNode node = HttpRequests.GetRequest("api/comment/" + id + "/" + port);
+        MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+        String comment = mainPageDto.getList().get(0);
+        if (comment == null) {
+            comment = "";
+        }
+        if (comment.isEmpty()) {
+            button_delete.setVisible(false);
+            text_comment.setPromptText("");
+        } else {
+            button_delete.setVisible(true);
+            text_comment.setPromptText("Текущий коментарий: " + comment);
+            button_delete.setOnAction(event -> makeComment(id, port, "", url));
+        }
+        button_cancel2.setOnAction(event -> closeCommentPane());
+        button_apply2.setOnAction(event -> {
+            if (text_comment.getText().isEmpty()) {
+                text_comment.setText(text_comment.getPromptText().replace("Текущий коментарий: ", ""));
+            }
+            makeComment(id, port, text_comment.getText(), url);
+        });
+    }
 
+    private void closeCommentPane() {
+        dialogPane.setVisible(false);
+        anchorPane_comment.setVisible(false);
+        text_comment.clear();
+    }
 
     @SneakyThrows
-    public void makeComment(Long id, int port, String url) {
-        HttpRequests.PostRequest(new CommentDto(id, port, "whdihqewuf"), "api/makeComment");
+    public void makeComment(Long id, int port, String comment, String url) {
+        HttpRequests.PostRequest(new CommentDto(id, port, comment), "api/makeComment");
+        closeCommentPane();
         cleanInformationAboutSwitch();
         fillingInformationAboutSwitch(url);
     }
 
     @SneakyThrows
-    @FXML
     public void openDialogPageOccupyPort() {
-        dialogPane_occupyPort.setVisible(true);
+        dialogPane.setVisible(true);
+        anchorPane_occupyPort.setVisible(true);
         JsonNode node = HttpRequests.GetRequest("api/dialogPage");
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+        button_cancel.setOnAction(event -> {
+            dialogPane.setVisible(false);
+            anchorPane_occupyPort.setVisible(false);
+            ip.clear();
+            mac.clear();
+        });
         choiceBox_equipmentType.getItems().setAll(mainPageDto.getList());
         choiceBox_equipmentType.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionType(newVal));
         choiceBox_equipmentCompany.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionCompany(newVal));
@@ -387,23 +448,18 @@ public class FXMLDocumentController2 implements Initializable {
         if (newVal != null) {
             flagToApply[2] = true;
             checkApplyFlag();
-            button_apply.setOnAction(event -> {
-                try {
-                    applyAction(newVal);
-                } catch (IOException | URISyntaxException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
+            button_apply.setOnAction(event -> applyAction(newVal));
         }
     }
 
-    private void applyAction(String newVal) throws IOException, URISyntaxException, InterruptedException {
+    @SneakyThrows
+    private void applyAction(String newVal){
         HttpRequests.PostRequest(
                 new EquipmentDto(selectedSwitchId, selectedPort, ip.getText(), mac.getText()),
                 "api/occupyPort/" + choiceBox_equipmentType.getValue() +
                         "/" + choiceBox_equipmentCompany.getValue() + "/" + newVal);
-        dialogPane_occupyPort.setVisible(false);
+        dialogPane.setVisible(false);
+        anchorPane_occupyPort.setVisible(false);
         ip.clear();
         mac.clear();
         handleSelectionSwitchNumber(choiceBox_building.getValue(),

@@ -81,18 +81,26 @@ public class MainService {
         EquipmentAtSwitch equipmentAtSwitch = equipmentAtSwitchRepository
                 .findByaSwitch_IdAndPort(commentDto.getSwitch_id(), commentDto.getPort());
         if (equipmentAtSwitch != null) {
-            equipmentAtSwitch.setComments(commentDto.getComment());
-            equipmentAtSwitchRepository.save(equipmentAtSwitch);
+            if (equipmentAtSwitch.getEquipment() == null && commentDto.getComment().isEmpty()) {
+                equipmentAtSwitchRepository.delete(equipmentAtSwitch);
+            } else {
+                equipmentAtSwitch.setComments(commentDto.getComment());
+                equipmentAtSwitchRepository.save(equipmentAtSwitch);
+            }
         } else {
             equipmentAtSwitchRepository.save(
                     new EquipmentAtSwitch(
                             null,
                             switchRepository.findById(commentDto.getSwitch_id()).get(),
                             commentDto.getPort(),
-                            "",
-                            "",
+                            null,
+                            null,
                             commentDto.getComment())
-            );
+                );
         }
+    }
+
+    public String getComment(Long switchId, int port) {
+        return equipmentAtSwitchRepository.findCommentsByaSwitch_IdAndPort(switchId, port);
     }
 }

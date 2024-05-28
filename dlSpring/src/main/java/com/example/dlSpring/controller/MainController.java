@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -85,7 +86,12 @@ public class MainController {
         mainService.makeComment(commentDto);
     }
 
-
+    @GetMapping("/comment/{switchId}/{port}")
+    public ResponseEntity<MainPageDto> getComment(@PathVariable Long switchId, @PathVariable int port) {
+        return new ResponseEntity<>(new MainPageDto(
+                new ArrayList<>(Collections.singleton(mainService.getComment(switchId, port)))
+        ), HttpStatus.OK);
+    }
 
     private String redactUrl(String url) {
         return url.replaceAll("_", " ");
