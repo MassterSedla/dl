@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class SwitchDto {
     private Long id;
-    private int number;
+    private String number;
     private String type;
     private String building;
     private String room;

@@ -14,18 +14,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FORT_AWESOME;
@@ -176,8 +175,6 @@ public class FXMLDocumentController2 implements Initializable {
 //        //fxApplication.showFXMLDocument();
 //    }
 
-
-
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -269,7 +266,21 @@ public class FXMLDocumentController2 implements Initializable {
                 button.setPrefWidth(63.0);
                 button.setPrefHeight(39.0);
                 button.setMnemonicParsing(false);
-                button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
+                //button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
+
+                // Загрузка изображения из ресурсов
+                Image image = new Image(getClass().getResourceAsStream("/com/example/dlFx/ethernet.png"));
+
+                // Создание ImageView с загруженным изображением
+                ImageView imageView = new ImageView(image);
+
+                // Установка размера изображения (по необходимости)
+                imageView.setFitWidth(30);
+                imageView.setFitHeight(30);
+
+                // Установка изображения в кнопку
+                button.setGraphic(imageView);
+
                 Label label = new Label();
                 if (k == 10) {
                     distance = 34;

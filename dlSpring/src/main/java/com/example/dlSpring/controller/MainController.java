@@ -31,20 +31,20 @@ public class MainController {
     @GetMapping("/page/{building}")
     public ResponseEntity<MainPageDto> getRooms(@PathVariable String building) {
         return new ResponseEntity<>(new MainPageDto(
-                new ArrayList<>(mainService.listOfRooms(building))
+                new ArrayList<>(mainService.listOfRooms(redactUrl(building)))
         ), HttpStatus.OK);
     }
 
     @GetMapping("/page/{building}/{room}")
     public ResponseEntity<MainPageDto> getNumbers(@PathVariable String building, @PathVariable String room) {
         return new ResponseEntity<>(new MainPageDto(
-                new ArrayList<>(mainService.listOfNumber(building, room))
+                new ArrayList<>(mainService.listOfNumber(redactUrl(building), room))
         ), HttpStatus.OK);
     }
 
     @GetMapping("/page/{building}/{room}/{number}")
-    public ResponseEntity<SwitchDto> getSwitches(@PathVariable String building, @PathVariable String room, @PathVariable int number) {
-        return new ResponseEntity<>(mainService.getSwitch(building, room, number), HttpStatus.OK);
+    public ResponseEntity<SwitchDto> getSwitches(@PathVariable String building, @PathVariable String room, @PathVariable String number) {
+        return new ResponseEntity<>(mainService.getSwitch(redactUrl(building), room, number), HttpStatus.OK);
     }
 
     @DeleteMapping("/page/{switchId}/{port}")

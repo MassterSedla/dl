@@ -3,7 +3,6 @@ package com.example.dlFx.controller;
 import com.example.dlFx.FxApplication;
 import com.example.dlFx.dto.AuthorizedUserDto;
 import com.example.dlFx.httpRequests.HttpRequests;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,8 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FXMLDocumentController implements Initializable {
-
-    // на экране входа нужно добавить поле для отображения ошибки входа строка 103 поле label
 
     @FXML
     private AnchorPane signIn_form;
@@ -46,17 +43,6 @@ public class FXMLDocumentController implements Initializable {
         stage.setIconified(true);
     }
 
-    // Смена между окнами авторизации и регистрации
-//    public void switchForm(ActionEvent event) {
-//        if (event.getSource() == signIn_createAccount) {
-//            signIn_form.setVisible(false);
-//            signUp_form.setVisible(true);
-//        } else if (event.getSource() == signUp_alreadyHaveAccount) {
-//            signUp_form.setVisible(false);
-//            signIn_form.setVisible(true);
-//        }
-//    }
-
     // Авторизация, вход и смена сцены
     @FXML
     private void switchToFXMLDocument2() throws IOException, URISyntaxException, InterruptedException {
@@ -83,6 +69,5 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //label.setText("This is a second controller")
     }
 }

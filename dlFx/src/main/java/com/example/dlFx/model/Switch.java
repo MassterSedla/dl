@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Switch {
     private Long id;
-    private int number;
+    private String number;
     private String type;
     private String building;
     private String room;

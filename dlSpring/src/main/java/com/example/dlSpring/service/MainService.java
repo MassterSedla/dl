@@ -35,7 +35,7 @@ public class MainService {
         return switchRepository.findAllNumberByBuildingAndRoom(building, room);
     }
 
-    public SwitchDto getSwitch(String building, String room, int number) {
+    public SwitchDto getSwitch(String building, String room, String number) {
         return new SwitchDto(switchRepository.findByBuildingAndRoomAndNumber(building, room, number));
     }
 

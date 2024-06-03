@@ -18,6 +18,6 @@ public interface SwitchRepository extends JpaRepository<Switch, Long> {
     @Query("select s.number from Switch s where s.building = :building and s.room = :room")
     Set<String> findAllNumberByBuildingAndRoom(String building, String room);
 
-    Switch findByBuildingAndRoomAndNumber(String building, String room, int number);
+    Switch findByBuildingAndRoomAndNumber(String building, String room, String number);
 
 }

@@ -38,4 +38,12 @@ public class Equipment {
                 ", equipmentPowerLoad=" + equipmentPowerLoad +
                 '}';
     }
+
+    public Equipment(String type, String company, String model, int equipmentTrafficLoad, int equipmentPowerLoad) {
+        this.type = type;
+        this.company = company;
+        this.model = model;
+        this.equipmentTrafficLoad = equipmentTrafficLoad;
+        this.equipmentPowerLoad = equipmentPowerLoad;
+    }
 }

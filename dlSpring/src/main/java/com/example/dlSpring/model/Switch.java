@@ -19,7 +19,7 @@ public class Switch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int number;
+    private String number;
     private String type;
     private String building;
     private String room;
@@ -44,5 +44,16 @@ public class Switch {
                 ", ip='" + ip + '\'' +
                 ", numberOfPort=" + numberOfPort +
                 '}';
+    }
+
+    public Switch(String number, String type, String building, String room, int permissibleTrafficLoad, int permissiblePowerLoad, String ip, int numberOfPort) {
+        this.number = number;
+        this.type = type;
+        this.building = building;
+        this.room = room;
+        this.permissibleTrafficLoad = permissibleTrafficLoad;
+        this.permissiblePowerLoad = permissiblePowerLoad;
+        this.ip = ip;
+        this.numberOfPort = numberOfPort;
     }
 }
