@@ -28,6 +28,7 @@ public class Equipment {
     @JsonManagedReference
     private List<EquipmentAtSwitch> equipmentAtSwitch;
 
+
     @Override
     public String toString() {
         return "Equipment{" +

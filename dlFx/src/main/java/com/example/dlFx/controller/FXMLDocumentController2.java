@@ -24,6 +24,7 @@ import lombok.SneakyThrows;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -256,6 +257,10 @@ public class FXMLDocumentController2 implements Initializable {
         int countPort = aSwitch.getNumberOfPort();
         Button[] buttons = new Button[countPort];
         Label[] labels = new Label[countPort];
+
+        // Загрузка изображения из ресурсов
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/dlFx/ethernet.png")));
+
         int k = 0;
         int distance = 37;
         for (int i = 0; i < countPort / 12; i++) {
@@ -268,12 +273,8 @@ public class FXMLDocumentController2 implements Initializable {
                 button.setMnemonicParsing(false);
                 //button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
 
-                // Загрузка изображения из ресурсов
-                Image image = new Image(getClass().getResourceAsStream("/com/example/dlFx/ethernet.png"));
-
                 // Создание ImageView с загруженным изображением
                 ImageView imageView = new ImageView(image);
-
                 // Установка размера изображения (по необходимости)
                 imageView.setFitWidth(30);
                 imageView.setFitHeight(30);
