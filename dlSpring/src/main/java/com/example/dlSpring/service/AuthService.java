@@ -13,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Сервисный класс для аутентификации пользователей.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -20,17 +23,27 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Создает токен аутентификации для пользователя.
+     * @param authorizedUserDto DTO с данными пользователя для аутентификации.
+     * @return ResponseEntity с JWT токеном в случае успешной аутентификации или ошибкой при неудаче.
+     */
     public ResponseEntity<?> createAuthToken(AuthorizedUserDto authorizedUserDto) {
         try {
+            // Аутентификация пользователя с использованием менеджера аутентификации.
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authorizedUserDto.getUsername(), authorizedUserDto.getPassword()));
         } catch (BadCredentialsException e) {
+            // Возвращает ошибку при некорректных учетных данных.
             return new ResponseEntity<>(new AuthException(HttpStatus.UNAUTHORIZED.value(),
                     "Incorrect login or password"), HttpStatus.UNAUTHORIZED);
         }
 
+        // Получает пользователя по его username.
         User user = userService.getUserByUsername(authorizedUserDto.getUsername());
+        // Генерирует JWT токен для пользователя.
         String token = jwtUtil.generatedToken(user);
+        // Устанавливает аутентификацию в контексте безопасности.
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
@@ -38,6 +51,7 @@ public class AuthService {
                         user.getAuthorities()
                 )
         );
+        // Возвращает ResponseEntity с токеном.
         return ResponseEntity.ok(token);
     }
 }

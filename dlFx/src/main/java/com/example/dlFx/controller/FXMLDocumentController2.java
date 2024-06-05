@@ -30,6 +30,10 @@ import java.util.regex.Pattern;
 
 import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.FORT_AWESOME;
 
+/**
+ * Контроллер для управления основной функциональностью приложения.
+ */
+
 public class FXMLDocumentController2 implements Initializable {
     @FXML
     public Label label_ipError;
@@ -151,118 +155,195 @@ public class FXMLDocumentController2 implements Initializable {
     @FXML
     private ScrollPane scrollPane_ports;
 
+    // Загрузка изображения из ресурсов
+    private final Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/dlFx/ethernet.png")));
+
     private int selectedPort;
     private Long selectedSwitchId;
     private boolean[] flagToApply;
     private FXMLLoader fxmlLoader;
 
-    // Закрыть окно
+    /**
+     * Закрывает окно.
+     */
     public void dashboard_close() {
         System.exit(0);
     }
 
-    // Свернуть окно
+    /**
+     * Сворачивает окно.
+     */
     public void dashboard_minimize() {
         Stage stage = (Stage)dashboard_form.getScene().getWindow();
         stage.setIconified(true);
     }
 
-    // Назад на страницу авторизации
-//    @FXML
-//    private void switchToFXMLDocument() {
-//
-//        dashboard_logOut_btn.getScene().getWindow().hide();
-//        //FxApplication fxApplication = new FxApplication();
-//        //fxApplication.showFXMLDocument();
-//    }
-
+    /**
+     * Метод инициализации контроллера, вызывается автоматически при создании экземпляра контроллера.
+     *
+     * @param url URL для инициализации.
+     * @param resourceBundle ресурсный бандл для инициализации.
+     */
     @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Получение информации о текущем пользователе
         JsonNode userNode = HttpRequests.GetRequest("user/info");
         User user = new ObjectMapper().treeToValue(userNode, User.class);
         label_username.setText(user.getName());
         label_email.setText(user.getEmail());
+
+        // Получение списка зданий
         JsonNode node = HttpRequests.GetRequest("api/page");
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         choiceBox_building.getItems().setAll(mainPageDto.getList());
+
+        // Добавление слушателей изменений выбора для ChoiceBox'ов
         choiceBox_building.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionBuilding(newVal));
         choiceBox_roomNumber.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionRoomNumber(choiceBox_building.getValue(), newVal));
         choiceBox_switch.valueProperty().addListener((obs, oldVal, switchNumber) ->
                 handleSelectionSwitchNumber(choiceBox_building.getValue(), choiceBox_roomNumber.getValue(), switchNumber));
+
+        // Инициализация флагов для проверки ввода
         flagToApply = new boolean[3];
         setPatterns();
     }
 
+    /**
+     * Устанавливает паттерны для проверки ввода IP и MAC адресов добавляемого оборудования.
+     */
     private void setPatterns() {
+        // Паттерн для проверки корректности IP адресов
         Pattern pattern = Pattern.compile("(192\\.168|10\\.0)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
         TextFormatter<String> formatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
+            // Проверка введенного IP адреса с помощью паттерна
             flagToApply[0] = pattern.matcher(newText).matches();
+            // Показать или скрыть ошибку валидации IP адреса
             label_ipError.setVisible(!flagToApply[0]);
+            // Проверка флагов для активации кнопки "Применить"
             checkApplyFlag();
             return change;
         });
         ip.setTextFormatter(formatter);
 
+        // Паттерн для проверки корректности MAC адресов
         Pattern pattern2 = Pattern.compile("([0-9a-f]{2}:){5}([0-9a-f]{2})");
         formatter = new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
+            // Проверка введенного MAC адреса с помощью паттерна
             flagToApply[1] = pattern2.matcher(newText).matches();
+            // Показать или скрыть ошибку валидации MAC адреса
             label_macError.setVisible(!flagToApply[1]);
+            // Проверка флагов для активации кнопки "Применить"
             checkApplyFlag();
             return change;
         });
         mac.setTextFormatter(formatter);
     }
 
+
+    /**
+     * Проверяет флаги валидации ввода и устанавливает состояние кнопки "Применить".
+     * Если все флаги установлены в true, кнопка становится активной, иначе - неактивной.
+     */
     private void checkApplyFlag() {
         button_apply.setDisable(!(flagToApply[0] && flagToApply[1] && flagToApply[2]));
     }
 
+
+    /**
+     * Обрабатывает выбор здания из выпадающего списка и обновляет список комнат.
+     *
+     * @param val выбранное здание.
+     */
     @SneakyThrows
     private void handleSelectionBuilding(String val) {
+        // Очистка списка комнат
         choiceBox_roomNumber.getItems().clear();
+
+        // Проверка, что значение не null
         if (val != null) {
+            // Отправка GET-запроса для получения списка комнат в выбранном здании
             JsonNode node = HttpRequests.GetRequest("api/page/" + val);
+            // Преобразование ответа в объект MainPageDto
             MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+            // Установка списка комнат в ChoiceBox
             choiceBox_roomNumber.getItems().setAll(mainPageDto.getList());
         }
     }
 
+
+    /**
+     * Обрабатывает выбор комнаты из выпадающего списка и обновляет список коммутаторов.
+     *
+     * @param val выбранное здание.
+     * @param newVal выбранная комната.
+     */
     @SneakyThrows
     private void handleSelectionRoomNumber(String val, String newVal) {
+        // Очистка списка коммутаторов
         choiceBox_switch.getItems().clear();
+
+        // Проверка, что значение newVal не null
         if (newVal != null) {
+            // Отправка GET-запроса для получения списка коммутаторов в выбранной комнате
             JsonNode node = HttpRequests.GetRequest("api/page/" + val + "/" + newVal);
+            // Преобразование ответа в объект MainPageDto
             MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+            // Установка списка коммутаторов в ChoiceBox
             choiceBox_switch.getItems().setAll(mainPageDto.getList());
         }
     }
 
+
+    /**
+     * Обрабатывает выбор коммутатора из выпадающего списка и обновляет информацию о нем.
+     *
+     * @param val выбранное здание.
+     * @param newVal выбранная комната.
+     * @param switchNumber выбранный коммутатор.
+     */
     @SneakyThrows
     private void handleSelectionSwitchNumber(String val, String newVal, String switchNumber) {
+        // Очистка текущей информации о коммутаторе
         cleanInformationAboutSwitch();
+
+        // Проверка, что значение switchNumber не null
         if (switchNumber != null) {
+            // Заполнение информации о выбранном коммутаторе
             fillingInformationAboutSwitch("api/page/" + val + "/" + newVal + "/" + switchNumber);
         }
     }
 
+
+    /**
+     * Заполняет информацию о коммутаторе, включая таблицу с содержагием информацию о портах,
+     * кнопки портов, их состояния и соответствующие действия.
+     *
+     * @param url URL для запроса информации о коммутаторе.
+     */
     @SneakyThrows
     private void fillingInformationAboutSwitch(String url) {
+        // Отправка GET-запроса для получения информации о коммутаторе
         JsonNode node = HttpRequests.GetRequest(url);
         Switch aSwitch = new ObjectMapper().treeToValue(node, Switch.class);
-        List<Integer> portList = aSwitch.getEquipments().stream().filter(e -> e.getId() != -1)
-                .mapToInt(EquipmentWithPort::getPort).boxed().toList();
+
+        // Получение списка портов, занятых оборудованием
+        List<Integer> portList = aSwitch.getEquipments().stream()
+                .filter(e -> e.getId() != -1)
+                .mapToInt(EquipmentWithPort::getPort)
+                .boxed()
+                .toList();
+
         int countPort = aSwitch.getNumberOfPort();
         Button[] buttons = new Button[countPort];
         Label[] labels = new Label[countPort];
 
-        // Загрузка изображения из ресурсов
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/dlFx/ethernet.png")));
-
         int k = 0;
         int distance = 37;
+
+        // Установка кнопок портов, их номеров и действий при нажатии
         for (int i = 0; i < countPort / 12; i++) {
             for (int j = 0; j < 12; j++) {
                 Button button = new Button();
@@ -271,15 +352,11 @@ public class FXMLDocumentController2 implements Initializable {
                 button.setPrefWidth(63.0);
                 button.setPrefHeight(39.0);
                 button.setMnemonicParsing(false);
-                //button.setGraphic(new FontAwesomeIconView(FORT_AWESOME, String.valueOf(30)));
 
                 // Создание ImageView с загруженным изображением
                 ImageView imageView = new ImageView(image);
-                // Установка размера изображения (по необходимости)
                 imageView.setFitWidth(30);
                 imageView.setFitHeight(30);
-
-                // Установка изображения в кнопку
                 button.setGraphic(imageView);
 
                 Label label = new Label();
@@ -290,9 +367,11 @@ public class FXMLDocumentController2 implements Initializable {
                 label.setLayoutY(53.0 + i * 80);
                 label.setFont(new Font("Ayuthaya", 14.0));
                 label.setText(String.valueOf(k + 1));
+
                 ContextMenu contextMenu = new ContextMenu();
                 MenuItem menuItem3 = new MenuItem("Comment");
                 menuItem3.setOnAction(event -> openDialogPageComment(aSwitch.getId(), Integer.parseInt(label.getText()), url));
+
                 if (portList.contains(k + 1)) {
                     MenuItem menuItem1 = new MenuItem("Show");
                     MenuItem menuItem2 = new MenuItem("Release");
@@ -318,21 +397,25 @@ public class FXMLDocumentController2 implements Initializable {
                         contextMenu.hide();
                     }
                 });
+
                 buttons[k] = button;
                 labels[k] = label;
                 k++;
             }
         }
+
         scrollPane_ports.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         anchorPane_ports.getChildren().addAll(buttons);
         anchorPane_ports.getChildren().addAll(labels);
 
+        // Заполнение информации о коммутаторе
         label_availablePorts.setText(aSwitch.getAvailablePorts());
         label_occupiedPorts.setText(aSwitch.getOccupiedPorts());
         label_trafficLoad.setText(aSwitch.getTrafficLoad());
         label_powerLoad.setText(aSwitch.getPowerLoad());
         aSwitch.clean();
 
+        // Заполнение таблицы с информацией о портах
         tableColumn_port.setCellValueFactory(new PropertyValueFactory<>("port"));
         tableColumn_port.setSortType(TableColumn.SortType.ASCENDING);
         tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -344,10 +427,11 @@ public class FXMLDocumentController2 implements Initializable {
 
         dashboard_form_greeting.setVisible(false);
         dashboard_form_info.setVisible(true);
-
-
     }
 
+    /**
+     * Очищает информацию о коммутаторе и обновляет интерфейс.
+     */
     private void cleanInformationAboutSwitch() {
         switchTable.getItems().clear();
         anchorPane_ports.getChildren().clear();
@@ -359,6 +443,11 @@ public class FXMLDocumentController2 implements Initializable {
         dashboard_form_greeting.setVisible(true);
     }
 
+    /**
+     * Выбирает ячейку в таблице по значению порта и прокручивает таблицу до этой ячейки.
+     *
+     * @param value значение порта, по которому нужно выбрать ячейку.
+     */
     private void selectCellByValue(int value) {
         for (EquipmentWithPort item : switchTable.getItems()) {
             if (tableColumn_port.getCellData(item) == value) {
@@ -369,24 +458,46 @@ public class FXMLDocumentController2 implements Initializable {
         }
     }
 
+    /**
+     * Освобождает указанный порт на коммутаторе и обновляет информацию о коммутаторе.
+     *
+     * @param switchId идентификатор коммутатора.
+     * @param port номер порта, который нужно освободить.
+     * @param url URL для повторного запроса информации о коммутаторе.
+     */
     @SneakyThrows
     private void releasePort(Long switchId, int port, String url) {
+        // Отправка DELETE-запроса для освобождения порта
         HttpRequests.DeleteRequest("api/page/" + switchId + "/" + port);
+
+        // Очистка текущей информации о коммутаторе
         cleanInformationAboutSwitch();
+
+        // Повторное заполнение информации о коммутаторе
         fillingInformationAboutSwitch(url);
     }
 
+
+    /**
+     * Открывает окно для добавления или редактирования комментария к порту коммутатора.
+     *
+     * @param id идентификатор коммутатора.
+     * @param port номер порта, к которому добавляется комментарий.
+     * @param url URL для обновления информации о коммутаторе.
+     */
     @SneakyThrows
     public void openDialogPageComment(Long id, int port, String url) {
+        // Отображение диалогового окна и панели комментариев
         dialogPane.setVisible(true);
         anchorPane_comment.setVisible(true);
+
+        // Отправка GET-запроса для получения текущего комментария к порту
         JsonNode node = HttpRequests.GetRequest("api/comment/" + id + "/" + port);
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
         String comment = mainPageDto.getList().get(0);
-        if (comment == null) {
-            comment = "";
-        }
-        if (comment.isEmpty()) {
+
+        // Проверка, есть ли текущий комментарий
+        if (comment == null)  {
             button_delete.setVisible(false);
             text_comment.setPromptText("");
         } else {
@@ -394,7 +505,11 @@ public class FXMLDocumentController2 implements Initializable {
             text_comment.setPromptText("Текущий коментарий: " + comment);
             button_delete.setOnAction(event -> makeComment(id, port, "", url));
         }
+
+        // Обработчик для кнопки "Отменить"
         button_cancel2.setOnAction(event -> closeCommentPane());
+
+        // Обработчик для кнопки "Применить"
         button_apply2.setOnAction(event -> {
             if (text_comment.getText().isEmpty()) {
                 text_comment.setText(text_comment.getPromptText().replace("Текущий коментарий: ", ""));
@@ -403,26 +518,50 @@ public class FXMLDocumentController2 implements Initializable {
         });
     }
 
+    /**
+     * Закрывает диалоговое окно комментариев и очищает текстовое поле для комментариев.
+     */
     private void closeCommentPane() {
         dialogPane.setVisible(false);
         anchorPane_comment.setVisible(false);
         text_comment.clear();
     }
 
+    /**
+     * Добавляет или обновляет комментарий к порту коммутатора и обновляет информацию о коммутаторе.
+     *
+     * @param id идентификатор коммутатора.
+     * @param port номер порта, к которому добавляется комментарий.
+     * @param comment текст комментария.
+     * @param url URL для повторного запроса информации о коммутаторе.
+     */
     @SneakyThrows
     public void makeComment(Long id, int port, String comment, String url) {
+        // Отправка POST-запроса для добавления или обновления комментария
         HttpRequests.PostRequest(new CommentDto(id, port, comment), "api/makeComment");
+        // Закрытие панели комментариев
         closeCommentPane();
+        // Очистка текущей информации о коммутаторе
         cleanInformationAboutSwitch();
+        // Повторное заполнение информации о коммутаторе
         fillingInformationAboutSwitch(url);
     }
 
+    /**
+     * Открывает диалоговое окно для занятия порта и загружает данные для выбора оборудования.
+     *
+     */
     @SneakyThrows
     public void openDialogPageOccupyPort() {
+        // Отображение диалогового окна и панели для занятия порта
         dialogPane.setVisible(true);
         anchorPane_occupyPort.setVisible(true);
+
+        // Отправка GET-запроса для получения списка типов оборудования
         JsonNode node = HttpRequests.GetRequest("api/dialogPage");
         MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
+
+        // Установка обработчиков для кнопок отмены и выбора
         button_cancel.setOnAction(event -> {
             dialogPane.setVisible(false);
             anchorPane_occupyPort.setVisible(false);
@@ -435,27 +574,44 @@ public class FXMLDocumentController2 implements Initializable {
         choiceBox_equipmentModel.valueProperty().addListener((obs, oldVal, newVal) -> handleSelectionModel(newVal));
     }
 
+    /**
+     * Обрабатывает выбор типа оборудования и обновляет список компаний.
+     *
+     * @param newVal выбранный тип оборудования.
+     */
     @SneakyThrows
     private void handleSelectionType(String newVal) {
         choiceBox_equipmentCompany.getItems().clear();
         if (newVal != null) {
+            // Отправка GET-запроса для получения списка компаний по выбранному типу оборудования
             JsonNode node = HttpRequests.GetRequest("api/dialogPage/" + newVal);
             MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
             choiceBox_equipmentCompany.getItems().setAll(mainPageDto.getList());
         }
     }
 
+    /**
+     * Обрабатывает выбор компании оборудования и обновляет список моделей.
+     *
+     * @param newVal выбранная компания.
+     */
     @SneakyThrows
     private void handleSelectionCompany(String newVal) {
         choiceBox_equipmentModel.getItems().clear();
         flagToApply[2] = false;
         if (newVal != null) {
+            // Отправка GET-запроса для получения списка моделей по выбранному типу и компании оборудования
             JsonNode node = HttpRequests.GetRequest("api/dialogPage/" + choiceBox_equipmentType.getValue() + "/" + newVal);
             MainPageDto mainPageDto = new ObjectMapper().treeToValue(node, MainPageDto.class);
             choiceBox_equipmentModel.getItems().setAll(mainPageDto.getList());
         }
     }
 
+    /**
+     * Обрабатывает выбор модели оборудования и активирует кнопку "Применить".
+     *
+     * @param newVal выбранная модель оборудования.
+     */
     private void handleSelectionModel(String newVal) {
         if (newVal != null) {
             flagToApply[2] = true;
@@ -464,17 +620,26 @@ public class FXMLDocumentController2 implements Initializable {
         }
     }
 
+    /**
+     * Обрабатывает действие "Применить" для занятия порта выбранным оборудованием.
+     *
+     * @param newVal выбранная модель оборудования.
+     */
     @SneakyThrows
-    private void applyAction(String newVal){
+    private void applyAction(String newVal) {
+        // Отправка POST-запроса для занятия порта выбранным оборудованием
         HttpRequests.PostRequest(
                 new EquipmentDto(selectedSwitchId, selectedPort, ip.getText(), mac.getText()),
                 "api/occupyPort/" + choiceBox_equipmentType.getValue() +
                         "/" + choiceBox_equipmentCompany.getValue() + "/" + newVal);
+        // Закрытие диалогового окна и панели для занятия порта
         dialogPane.setVisible(false);
         anchorPane_occupyPort.setVisible(false);
         ip.clear();
         mac.clear();
+        // Обновление информации о коммутаторе
         handleSelectionSwitchNumber(choiceBox_building.getValue(),
                 choiceBox_roomNumber.getValue(), choiceBox_switch.getValue());
     }
+
 }

@@ -4,6 +4,9 @@ import com.example.dlSpring.model.Equipment;
 import com.example.dlSpring.model.EquipmentAtSwitch;
 import lombok.Data;
 
+/**
+ * DTO для передачи информации об оборудовании и порте, к которому оно подключено.
+ */
 @Data
 public class EquipmentWithPortDto {
     private Long id;
@@ -13,6 +16,12 @@ public class EquipmentWithPortDto {
     private int equipmentPowerLoad;
     private String comment;
 
+
+    /**
+     * Конструктор, который инициализирует DTO на основе объекта EquipmentAtSwitch.
+     *
+     * @param equipmentAtSwitch объект, представляющий связь между оборудованием и коммутатором.
+     */
     public EquipmentWithPortDto(EquipmentAtSwitch equipmentAtSwitch) {
         this.port = equipmentAtSwitch.getPort();
         this.comment = equipmentAtSwitch.getComments();

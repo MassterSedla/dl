@@ -5,6 +5,10 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * DTO для передачи информации о коммутаторе.
+ */
+
 @Data
 public class SwitchDto {
     private Long id;
@@ -17,6 +21,11 @@ public class SwitchDto {
     private int numberOfPort;
     private List<EquipmentWithPortDto> equipments;
 
+    /**
+     * Конструктор, который инициализирует DTO на основе объекта Switch.
+     *
+     * @param aSwitch объект коммутатора, на основе которого создается DTO.
+     */
     public SwitchDto(Switch aSwitch) {
         this.id = aSwitch.getId();
         this.number = aSwitch.getNumber();
